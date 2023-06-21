@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% load bootstrap4 %}
+
+{% block title %}
+    Create Store
+{% endblock %}
+
+
+{% block content %}
+<style>
+    .form-group{ margin-top:0.9rem }
+</style>
+<div id="content">
+    <div id="main" class="product-list w-100">
+        <div class='d-flex justify-content-between align-items-center'>
+            <h1 class='mt-5 mb-4'> {{ store_name }} Store</h1>
+            <div class="mt-5 me-5 pt-5 pe-5">
+                <button type="button" class="btn btn-outline-success fs-5" data-bs-toggle="modal" data-bs-target="#id_modal"> 
+                    Add Product  
+                </button>
+            </div>
+        
+        </div>
+        
+        <div class="modal" id="id_modal"> 
+          <div class="modal-dialog"> 
+            <div class="modal-content"> 
+              
+              <div class="modal-header"> 
+                <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body"> 
+                <div class='container'>
+                    <form action="{% url 'store_list' %}" method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button type="submit" class='btn btn-primary w-100' style='margin:auto'> Submit </button>
+                    </form>
+                </div>        
+              </div>
+              <div class="modal-footer"> 
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+        
+            </div>
+          </div>
+        </div>
+
+       
+        <div class='mt-5 pt-5'>
+            {% for product in store_products %}
+                <div class="item">
+                    <a href="{{ product.get_absolute_url }}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    </a>
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                    <br>
+                    ${{ product.price }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

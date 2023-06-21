@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+{% load bootstrap4 %}
+
+{% block title %}
+    Create Store
+{% endblock %}
+
+
+{% block content %}
+<style> form>div{ margin-top:1.3rem}  </style>
+<div id="content">
+    <form action="#" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class='btn btn-primary mt-4'> Submit </button>
+    </form>
+</div>
+{% endblock %}
