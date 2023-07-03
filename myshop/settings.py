@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-2wf!^9tjx04nwo#2(5hb3sj$l2x^w(km*r44rqaxo)-%fh7(o='
@@ -32,7 +31,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'orders.apps.OrdersConfig',
     'create_store.apps.CreateStoreConfig',
-
+    'scraping.apps.ScrapingConfig',
 
     'bootstrap4',
     'fontawesomefree',
@@ -82,24 +81,24 @@ WSGI_APPLICATION = 'myshop.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'test',
+        'USER': 'root',
+        'PASSWORD': 'reda0606705646',
+        'HOST': 'localhost',
+        'PORT': '3306',
+
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+    
+}#
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -113,7 +112,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    #'/var/www/static/',
 ] 
 
 

@@ -11,6 +11,7 @@
 {% block content %}
 <style>
     .form-group{ margin-top:0.9rem }
+    .img{ height:240px; object-fit:cover;}
 </style>
 <div id="content">
     <div id="main" class="product-list w-100">
@@ -50,11 +51,11 @@
         </div>
 
        
-        <div class='mt-5 pt-5'>
+        <div class='mt-5 pt-5 row'>
             {% for product in store_products %}
-                <div class="item">
+                <div class="col-md-4">
                     <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class='w-100 img'>
                     </a>
                     <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
                     <br>

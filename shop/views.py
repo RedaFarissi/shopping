@@ -16,10 +16,12 @@ def index(request , category_slug=None):
         category = get_object_or_404(Category , slug=category_slug)
         products = Product.objects.filter(category=category)
     #use paginator 
-    paginator = Paginator(products , 100)
+    paginator = Paginator(products , 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, "index.html", {"category":category ,"categories" : categories , "products": page_obj })
+
+    
 
 
 def product_detail(request, id , slug):
@@ -51,6 +53,7 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.core.files.base import ContentFile
 import os
+
 
 def create_data_in_project_from_list(products , user , thumbnail ):
     for product_data in products :
@@ -96,7 +99,6 @@ def create_data_in_project_from_list(products , user , thumbnail ):
         os.remove(temp_image_path)
 
 
-url3 = "https://api.storerestapi.com/products"
 def add_some_product_from_api_to_database(request):
     try:
         link_api = ["https://fakestoreapi.com/products" , "https://dummyjson.com/products"] 

@@ -6,10 +6,20 @@
 {% endblock %}
 
 {% block content %}
+<style>
+  table { border-spacing:0; border-collapse: collapse; border:0.9px solid rgba(0 0 0/80%); margin-bottom:40px;}
+  tr{ border:0.9px solid rgba(0 0 0/80%);}
+  table:hover { background-color: white; }
+  thead>tr>th{ padding:9px; }
+  .table {  margin-bottom:40px; }
+  .table img { width:180px; }
+  .text-right { text-align:right;}
+  .num{text-align:center;}
+</style>
 <div id="content">
   <h1>Your shopping cart</h1>
-  <table class="cart w-100">
-    <thead>
+  <table class="w-100 table table-hover">
+    <thead class='bg-secondary text-light'>
       <tr>
         <th>Image</th>
         <th>Product</th>
@@ -25,8 +35,7 @@
           <tr>
             <td>
               <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }}
-                {% else %}{% static "img/no_image.png" %}{% endif %}">
+                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class='ms-3'>
               </a>
             </td>
             <td>{{ product.name }}</td>
@@ -49,16 +58,17 @@
           </tr>
         {% endwith %}
       {% endfor %}
-      <tr class="total">
-        <td>Total</td>
+      
+      <tr class="total mt-2">
+        <td class='p-4'><b>Total</b></td>
         <td colspan="4"></td>
-        <td class="num">${{ cart.get_total_price }}</td>
+        <td class="num"><b>${{ cart.get_total_price }}</b></td>
       </tr>
     </tbody>
   </table>
   <p class="text-right">
-    <a href="{% url "index" %}" class="button light">Continue shopping</a>
-    <a href="{% url "orders:order_create" %}" class="button">
+    <a href="{% url "index" %}" class="btn light">Continue shopping</a>
+    <a href="{% url "orders:order_create" %}" class="btn btn-primary">
       Checkout
      </a>
   </p>

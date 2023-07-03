@@ -9,49 +9,81 @@
     <style>
         .like:hover{ background-color:black; }
         .like-i:hover{ color:white }
+        .aside{ width:220px; float:left }
+        .main{ width: calc(100% - 240px); float:right; }
+        .img{ height:240px; object-fit:cover;}
+        .slected{ background-color: rgba(13 110 253 /80%)}
+        body::-webkit-scrollbar { width: 10px; }
+        body::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+        body::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+        body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+        body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+        
+        @media only screen and (max-width:1100px) {
+            .aside{  width:100%; }
+            .aside>h5{ display:none; }
+            .list-group {  width:100%; display:flex; flex-direction: row; align-items:center; overflow-x:auto; margin-bottom:20px}
+            .list-group::-webkit-scrollbar { height: 7px; }
+            .list-group::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+            .list-group::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+            .list-group::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+            .list-group::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+            .list-group-item{ width:max-width; }
+            .main_products{ width:96%; margin-left:2% }
+        }
     </style>
-    <div id="content">
-        <div id="sidebar">
-            <h3>Categories</h3>
-            <ul>
-                <li {% if not category %}class="selected"{% endif %}>
-                    <a href="{% url "index" %}">All</a>
-                </li>
-                {% for c in categories %}
-                    <li {% if category.slug == c.slug %} class="selected" {% endif %}>
-                        <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div id="main" class="product-list w-100">
-            <h1>{% if category %}{{ category.name }}{% else %}Products {% endif %}</h1>
-            {% for product in products %}
-                <div class="item me-3 position-relative">
-                    <a href="{{ product.get_absolute_url }}" >
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
-                    </a>
-                    {% if user.is_authenticated %}
-                    <div class='like position-absolute rounded border' style='top:0px;right:0px;'>
-                        <a href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle' >
-                            <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
-                            {{ product.total_likes }}
-                        </a>
-                    </div>
-                    {% endif %}
-                    <div class='d-flex justify-content-around'>
-                        <a href="{{ product.get_absolute_url }}"><b>{{ product.name }}</b></a>
-                        <div>
-                            <b>${{ product.price }}</b>
-                        </div>
-                    </div>
-                    <br>
+
+        <aside class="aside mt-3">
+            <h5>Categories</h5>
+            <div class="list-group">
+                <div class="list-group-item rounded border-0 {% if not category %}slected{% endif %}">
+                    <b><a href="{% url "index" %}">All</a></b>
                 </div>
-            {% endfor %}
+                {% for c in categories %}
+                    <div class="list-group-item rounded border-0 {% if category.slug == c.slug %}slected{% endif %}">
+                        <b><a href="{{ c.get_absolute_url }}">{{ c.name }}</a> </b>
+                    </div>
+                {% endfor %}
+            </div>
+        </aside>
+          
+
+        <div class='main_products'>
+            <h1>{% if category %} {{category.name}} {% endif %}</h1>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-4 position-relative">
+                        <a href="{{ product.get_absolute_url }}" >
+                            <img class='w-100 img' src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                        </a>
+
+                        {% if user.is_authenticated %}
+                        <div class='like position-absolute rounded border' style='top:0px;left:0px;'>
+                            <a href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle' >
+                                <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                {{ product.total_likes }}
+                            </a>
+                        </div>
+                        {% endif %}
+
+                        <div class='d-flex justify-content-around'>
+                            <a href="{{ product.get_absolute_url }}"><b>{{ product.name }}</b></a>
+                            <div> <b>${{ product.price }}</b> </div>
+                        </div>
+                        <br>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
+
+
+
+
+
+
+
     {% if products.has_other_pages %}
-        <footer class='d-flex justify-content-center align-item-center'>
+        <footer class='d-flex justify-content-center align-item-center' style="clear:both">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                   {% if products.has_previous %}
