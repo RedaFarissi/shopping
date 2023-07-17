@@ -3,14 +3,23 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>{% block title %}My shop{% endblock %}</title>
+        <title>{% block title %} My shop {% endblock %}</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
         <style> 
+          *{ padding:0px; margin:0px; box-sizing:border-box; }
+          body{ position:relative; }
+          body::-webkit-scrollbar { width: 10px; }
+          body::-webkit-scrollbar-track { background-color:white; border:0.3px solid black;  }
+          body::-moz-scrollbar-track { background-color: white;border-radius: 2px;box-shadow: white; }
+          body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+          body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+
           .logo{ font-size:30px; font-weight:500; margin-left:2rem}
           .usser>a { text-decoration:none; color:black; width:40px; height:40px;  }
           .usser , .cart, .store , .login{ width:47px; height:47px; cursor: pointer; }
@@ -19,89 +28,155 @@
           .store>a:hover { color:white ; }
           h1, h2, h3, h4, h5 , h6 { font-family: 'Ubuntu', sans-serif; font-weight:normal; }
           main{ margin:2rem;}
+          
+
+          .header{ height:90px; }
+          #collection{ font-weight:700; cursor:pointer; text-shadow:2px 2px 20px #f6e4da; }  
+          .hedaer-center-item ,  button>a{ text-decoration: none; cursor:pointer;}
+          .hedaer-center-item { transition: font-size 2s , margin-top 2s;}
+          .hedaer-center-item:hover { font-size:100%; margin-top:-3px;}
+          .hedaer-right-btn{ font-weight:500}
+          button>a{ color: black}
+
           @media only screen and (max-width:1100px) {
             .navbar{ width:100%;}
             .me-3{ margin-right:0}
             main{ margin:0.5rem; }
           }
+          @media only screen and (max-width: 999px){
+            body{ font-size:95%;}
+            .header-right{  
+              position:fixed; bottom:0rem;  background-color:#f1f1f1;  width:90%; z-index:999; 
+              height:65px; display:flex; justify-content:space-around; align-items:center; 
+              border:0.9px solid black; border-bottom:none; border-radius: 5px 5px 0px 0px; box-shadow:2px 2px 20px rgba(0 0 0/30%);
+            }
+          }
+          @media only screen and (max-width: 600px){
+            body{ font-size:89%;}
+            .hedaer-right-btn{  font-size:90%; }
+          }
         </style>
     </head>
-    <body>
+    <body onscroll="scroll_body()">
+      {% if user.is_superuser%}
+        <a href="{% url 'add_some_product_from_api_to_database' %}" class="btn border border-1 border-dark rounded-circle bg-success text-light" title='Products API' style='position:fixed; bottom:3rem; right:0.9rem;z-index:988'>
+          <i class="fa-regular fa-plus"></i>
+        </a>
+      {% endif %}
 
-        <nav class="container-fluid navbar navbar-light  justify-content-between">
-          
-          <a href="/"  class="navbar-brand logo">My shop</a>
-
-          <div class="d-flex align-items-center">
-            <a href="{% url "cart:cart_detail" %}" class="cart border position-relative rounded-circle d-flex justify-content-center align-items-center me-3" title="Cart">
-              <i class="fa-solid fa-cart-shopping fs-5 mt-1"></i>
-                <div class="badge rounded-circle position-absolute {% if cart|length > 0 %} bg-primary {% else %} bg-secondary {% endif %}"  
-                    style="right:2px;top:7px;font-size:9px"> 
-                    {{ cart|length  }} 
-                </div> 
-            </a>
-       
-            {% if user.is_superuser%}
-                <a href="{% url 'add_some_product_from_api_to_database' %}"  class="store border rounded-circle d-flex align-items-center me-3 p-0" title='Add Product to home page'>
-                  <i class="fa-regular fa-plus fs-5 w-100 text-center"></i>
-                </a>
-            {% endif %}
-
-            {% if user.is_authenticated %}
-              <div >
-                <a href="{% url 'create_store' %}" class="store border rounded-circle d-flex align-items-center me-3" title='Store'>
-                  <i class="fa-solid fa-store fs-5 w-100 text-center"></i>
-                </a>
-              </div>
-            {% endif %}
-
-            {% if not user.is_authenticated %}
-              <div class="store border rounded-circle d-flex align-items-center me-3" title='Store'>
-                <a href="{% url 'signup' %}" class='w-100 text-center' title='Create Account'>
-                  <i class="fa-solid fa-user-plus"></i>
-                </a>
-              </div>
-            {% endif %}
-
-            <div class="d-flex me-3">
-              {% if user.is_authenticated %}
-                <div class="dropdown position-relative"> 
-                  <div class="usser border rounded-circle d-flex justify-content-center align-items-center" data-bs-toggle="dropdown"> 
-                    <i class="fa-solid fa-user fs-5"></i> 
-                  </div>
-                  <ul class="dropdown-menu p-2 position-absolute" style="left:-120px;"> 
-                    <h6> {{ user.get_username }} </h6>
-                    <li class="usser dropdown-item w-100 bg-danger rounded">
-                      <a href="{% url 'logout' %}?next={{ request.path }}">
-                        <div class="d-flex justify-content-center align-items-center">
-                          <div class="fa-solid fa-right-from-bracket me-2 text-light"></div> 
-                          <div class="m-1 text-light"> Logout</div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              {% else %}
-                <div class="border login rounded-circle d-flex justify-content-center align-items-center">
-                  <a href="{% url 'login' %}?next={{ request.path }}" 
-                    class="fa-solid fa-right-to-bracket fs-4 text-dark text-decoration-none w-100 text-center" title='login'>
-                  </a>
-                </div>
-              {% endif %}
-            </div>
-          </div>
-
-        </nav>
+      <header class='d-flex justify-content-around align-items-center header'>
+        <div class='mt-2'>
+            <a href="/"><h5 id="collection">MY SHOP</h5></a>
+        </div>
     
+        <div class='row'>
+            <a href="{% url 'index'%}" class='col-3 text-center text-dark hedaer-center-item'> Home </a>
+            <a href="{% url 'index'%}" class='col-3 text-center text-dark hedaer-center-item'> Products </a>
+            <a class='col-3 text-center text-dark hedaer-center-item'> About </a>
+            <a class='col-3 text-center text-dark hedaer-center-item'> Contact </a>
+        </div>
 
-
-
+        <div class='header-right'>
+            {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}?next={{ request.path }}" class="hedaer-right-btn btn btn-outline-danger" title="Logout"> 
+                <i class="fa-solid fa-right-from-bracket"></i> 
+              </a> 
+              <a href="{% url 'create_store' %}" class="hedaer-right-btn btn border border-1 border-dark" title='Store'>
+                <i class="fa-solid fa-store fs-5 w-100 text-center"></i> 
+              </a>
+            {% else %}
+              <a href="{% url 'login' %}?next={{ request.path }}" class="hedaer-right-btn btn btn-outline-success" title='Login'> 
+                <i class="fa-solid fa-right-to-bracket"></i> 
+              </a>
+            
+              <a href="{% url 'signup' %}" class='hedaer-right-btn btn border border-1 border-dark' title='Create Account'>
+                <i class="fa-solid fa-user-plus"></i>
+              </a>
+              
+            {% endif %}
+            <a class="hedaer-right-btn btn border border-1 border-dark" title='Register'> 
+                <i class="fa-regular fa-plus"></i> 
+            </a>
+            <a href="{% url "cart:cart_detail" %}" class="hedaer-right-btn btn border border-1 border-dark position-relative" title='cart'> 
+                <i class="fa-solid fa-cart-shopping"></i> 
+                <div class='badge rounded-circle position-absolute {% if cart|length > 0 %} slected {% else %} bg-warning {% endif %}' style='right:-7px;top:-7px;'> {{ cart|length  }} </div>
+            </a>
+        </div>
+      </header> 
       
+    
+    {% comment %} 
+    <nav class="container-fluid navbar navbar-light justify-content-between">
+      <a href="/"  class="navbar-brand logo">My shop</a>
 
-       <main>
-           {% block content %}
+      <div class="d-flex align-items-center">
+        <a href="{% url "cart:cart_detail" %}" class="cart border position-relative rounded-circle d-flex justify-content-center align-items-center me-3" title="Cart">
+          <i class="fa-solid fa-cart-shopping fs-5 mt-1"></i>
+            <div class="badge rounded-circle position-absolute {% if cart|length > 0 %} bg-primary {% else %} bg-secondary {% endif %}"  
+                style="right:2px;top:7px;font-size:9px"> 
+                {{ cart|length  }} 
+            </div> 
+        </a>
+   
+        {% if user.is_superuser%}
+            <a href="{% url 'add_some_product_from_api_to_database' %}"  class="store border rounded-circle d-flex align-items-center me-3 p-0" title='Add Product to home page'>
+              <i class="fa-regular fa-plus fs-5 w-100 text-center"></i>
+            </a>
+        {% endif %}
 
-           {% endblock %}
-       </main>
+        {% if user.is_authenticated %}
+          <div >
+            <a href="{% url 'create_store' %}" class="store border rounded-circle d-flex align-items-center me-3" title='Store'>
+              <i class="fa-solid fa-store fs-5 w-100 text-center"></i>
+            </a>
+          </div>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+          <div class="store border rounded-circle d-flex align-items-center me-3" title='Store'>
+            <a href="{% url 'signup' %}" class='w-100 text-center' title='Create Account'>
+              <i class="fa-solid fa-user-plus"></i>
+            </a>
+          </div>
+        {% endif %}
+
+        <div class="d-flex me-3">
+          {% if user.is_authenticated %}
+            <div class="dropdown position-relative"> 
+              <div class="usser border rounded-circle d-flex justify-content-center align-items-center" data-bs-toggle="dropdown"> 
+                <i class="fa-solid fa-user fs-5"></i> 
+              </div>
+              <ul class="dropdown-menu p-2 position-absolute" style="left:-120px;"> 
+                <h6> {{ user.get_username }} </h6>
+                <li class="usser dropdown-item w-100 bg-danger rounded">
+                  <a href="{% url 'logout' %}?next={{ request.path }}">
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="fa-solid fa-right-from-bracket me-2 text-light"></div> 
+                      <div class="m-1 text-light"> Logout</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          {% else %}
+            <div class="border login rounded-circle d-flex justify-content-center align-items-center">
+              <a href="{% url 'login' %}?next={{ request.path }}" 
+                class="fa-solid fa-right-to-bracket fs-4 text-dark text-decoration-none w-100 text-center" title='login'>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </nav> 
+    {% endcomment %}
+   
+        {% block content %}
+
+        {% endblock %}
+
+      <script src="{% static 'bootstrap.js' %}"></script>
+      <script>
+    
+      </script>
     </body>
 </html>

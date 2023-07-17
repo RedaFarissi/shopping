@@ -5,7 +5,7 @@ from django.db.models import Count
 from django.core.paginator import Paginator
 from django.utils.text import slugify
 import requests
-
+from django.db.models import Q 
 def index(request , category_slug=None):   
     categories =  Category.objects.all()
     #this will return all rows with available True and create key total_likes in each product  
@@ -14,14 +14,17 @@ def index(request , category_slug=None):
     #check category_slug if None 
     if category_slug:
         category = get_object_or_404(Category , slug=category_slug)
-        products = Product.objects.filter(category=category)
+        query = Q(available=True) & Q(category=category)
+        products = Product.objects.filter(query).annotate(total_likes=Count('like'))
+        #products = Product.objects.filter(category=category)
     #use paginator 
     paginator = Paginator(products , 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, "index.html", {"category":category ,"categories" : categories , "products": page_obj })
-
     
+
+
 
 
 def product_detail(request, id , slug):
@@ -35,7 +38,10 @@ def product_detail(request, id , slug):
     return render(request, "detail.html", {"product":product , 'cart_product_form': cart_product_form })
 
 
-def add_like_product(request , id , slug):
+
+from django.urls import resolve
+
+def add_like_product_index(request , id , slug , category_slug=None):
     #get the product 
     product = get_object_or_404(Product, id=id , slug=slug )
     #ckeck if user add like or not if yes delete this from Like models
@@ -45,8 +51,13 @@ def add_like_product(request , id , slug):
         # if not add user and Product to Like models 
         like = Like(user=request.user, product=product)
         like.save()
-    return redirect("index")
-
+    if category_slug :
+        category = get_object_or_404(Category , slug=category_slug)
+        print(category)
+        return redirect(category)
+    else:
+        return redirect('index')
+        
 
 
 from django.core.files import File

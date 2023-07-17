@@ -9,7 +9,6 @@
 {% block content %}
 <style>
     .img-detail{ max-height: 80vh; object-fit:contain }
-    
 </style>
 <div class='row m-2'> 
     <img class='img-detail col-md-6' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">

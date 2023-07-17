@@ -1,9 +1,12 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% load static %}
 
 {% block title %}
     {% if category %}{{ category.name }}{% else %}Products{% endif %}
 {% endblock %}
+
+
+
 
 {% block content %}
     <style>
@@ -12,17 +15,18 @@
         .aside{ width:220px; float:left }
         .main{ width: calc(100% - 240px); float:right; }
         .img{ height:240px; object-fit:cover;}
-        .slected{ background-color: rgba(13 110 253 /80%)}
-        body::-webkit-scrollbar { width: 10px; }
-        body::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
-        body::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
-        body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
-        body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
-        
+        .slected{ background-color: #ffd3b4}
+        section{ margin:2rem;  }
+        #section{ height :400px}
+        .carousel-item > img{ object-fit : cover}
+
         @media only screen and (max-width:1100px) {
             .aside{  width:100%; }
             .aside>h5{ display:none; }
-            .list-group {  width:100%; display:flex; flex-direction: row; align-items:center; overflow-x:auto; margin-bottom:20px}
+            .list-group {  
+              width:100%; display:flex; flex-direction: row; align-items:center; 
+              overflow-x:auto; margin-bottom:20px;
+            }
             .list-group::-webkit-scrollbar { height: 7px; }
             .list-group::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
             .list-group::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
@@ -31,9 +35,57 @@
             .list-group-item{ width:max-width; }
             .main_products{ width:96%; margin-left:2% }
         }
+        @media only screen and (max-width: 999px){
+          section{ margin:0rem; }
+          #section{ height :300px}
+        }
+        @media only screen and (max-width: 600px){
+          .main_products{ width:99%; margin:0.5%; }
+          .content{ width:100%;}
+        }
     </style>
-
-        <aside class="aside mt-3">
+    <section id="section">
+        <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner h-100">
+              <div class="carousel-item h-100 active">
+                <img src="{% static './img/banner-1.jpg' %}" class='w-100 h-100' />
+                <div class="carousel-caption d-none d-md-block">
+                  <h5></h5>
+                  <p></p>
+                </div>
+              </div>
+              <div class="carousel-item h-100">
+                <img src="{% static './img/banner-2.jpg' %}" class='w-100 h-100'/>
+                <div class="carousel-caption d-none d-md-block">
+                  <h5></h5>
+                  <p>.</p>
+                </div>
+              </div>
+              <div class="carousel-item h-100">
+                <img src="{% static './img/banner-3.jpg' %}" class='w-100 h-100'/>
+                <div class="carousel-caption d-none d-md-block">
+                  <h5></h5>
+                  <p></p>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+        </div>                        
+      </section>
+    <section>
+        <aside class="aside mt-3" id="aside">
             <h5>Categories</h5>
             <div class="list-group">
                 <div class="list-group-item rounded border-0 {% if not category %}slected{% endif %}">
@@ -41,7 +93,7 @@
                 </div>
                 {% for c in categories %}
                     <div class="list-group-item rounded border-0 {% if category.slug == c.slug %}slected{% endif %}">
-                        <b><a href="{{ c.get_absolute_url }}">{{ c.name }}</a> </b>
+                        <b> <a href="{{ c.get_absolute_url }}">{{ c.name }}</a> </b>
                     </div>
                 {% endfor %}
             </div>
@@ -50,7 +102,7 @@
 
         <div class='main_products'>
             <h1>{% if category %} {{category.name}} {% endif %}</h1>
-            <div class="row">
+            <div class="row content">
                 {% for product in products %}
                     <div class="col-md-4 position-relative">
                         <a href="{{ product.get_absolute_url }}" >
@@ -59,10 +111,24 @@
 
                         {% if user.is_authenticated %}
                         <div class='like position-absolute rounded border' style='top:0px;left:0px;'>
-                            <a href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle' >
+                            {% if not category %}
+                                <a onclick='click_like()' href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle Like' >
+                                    <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                    {{ product.total_likes }}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_like_product_category' id=product.id slug=product.slug category_slug=category %}" class='btn rounded-circle Like' >
+                                    <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                    {{ product.total_likes }}
+                                </a>
+                            {% endif %}
+
+                            {% comment %} 
+                            <a href="{% url 'add_like_product' id=product.id slug=product.slug category_slug=product.category %}" class='btn rounded-circle' >
                                 <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
                                 {{ product.total_likes }}
-                            </a>
+                            </a> 
+                             {% endcomment %}
                         </div>
                         {% endif %}
 
@@ -111,4 +177,9 @@
             </nav>
         </footer>
     {% endif%}
+    </section>
+
+
+    
+   
 {% endblock %}
