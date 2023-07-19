@@ -6,7 +6,19 @@ from django.core.paginator import Paginator
 from django.utils.text import slugify
 import requests
 from django.db.models import Q 
+from django.urls import resolve
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+from django.core.files.base import ContentFile
+import os
+from django.conf import settings
+from django.core.mail import send_mail
+
+
+
+
 def index(request , category_slug=None):   
+    print(request.get_host())
     categories =  Category.objects.all()
     #this will return all rows with available True and create key total_likes in each product  
     products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
@@ -16,7 +28,6 @@ def index(request , category_slug=None):
         category = get_object_or_404(Category , slug=category_slug)
         query = Q(available=True) & Q(category=category)
         products = Product.objects.filter(query).annotate(total_likes=Count('like'))
-        #products = Product.objects.filter(category=category)
     #use paginator 
     paginator = Paginator(products , 12)
     page_number = request.GET.get('page')
@@ -39,7 +50,44 @@ def product_detail(request, id , slug):
 
 
 
-from django.urls import resolve
+def products(request):
+    products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
+    paginator = Paginator(products , 100)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, "products.html", {"products": page_obj })
+
+
+def contact(request):
+    return render(request, "contact.html")
+
+def sendEmailToAdmin(request):
+    if request.method == "POST":
+        message = request.POST['message']
+        email = request.POST['email']
+        name = request.POST['name']
+        send_mail(
+            name , 
+            message, 
+            'settings.EMAIL_HOST_USER',
+            [email] , 
+            fail_silently=False
+        )
+        return render(request , 'successful_email_send.html' )
+    return render(request , 'contact.html' )
+
+def successful_email_send(request):
+    return render(request , 'successful_email_send.html' )
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+
+
+
+
 
 def add_like_product_index(request , id , slug , category_slug=None):
     #get the product 
@@ -60,10 +108,6 @@ def add_like_product_index(request , id , slug , category_slug=None):
         
 
 
-from django.core.files import File
-from django.core.files.temp import NamedTemporaryFile
-from django.core.files.base import ContentFile
-import os
 
 
 def create_data_in_project_from_list(products , user , thumbnail ):
@@ -132,11 +176,16 @@ def add_some_product_from_api_to_database(request):
 
 
 
+
+
+
+
+
+
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm 
-from django.core.mail import send_mail
-from django.conf import settings
 
 
 # we use this function to create Sign Up  

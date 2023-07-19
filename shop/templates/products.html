@@ -1,0 +1,110 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block title %}
+    Products
+{% endblock title %}
+
+
+
+
+{% block content %}
+    <style>
+        .like:hover{ background-color:black; color:white }
+        .img{ height:240px; object-fit:cover;}
+        footer{ overflow-x:auto; max-weight:200px;  }
+        @media only screen and (max-width:1100px) {
+            .list-group {  
+              width:100%; display:flex; flex-direction: row; align-items:center; 
+              overflow-x:auto; margin-bottom:20px;
+            }
+            .list-group::-webkit-scrollbar { height: 7px; }
+            .list-group::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+            .list-group::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+            .list-group::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+            .list-group::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+            .list-group-item{ width:max-width; }
+            .main_products{ width:96%; margin-left:2% }
+        }
+        @media only screen and (max-width: 999px){
+          section{ margin:0rem; }
+          #section{ height :300px}
+          footer{ margin-bottom:3.8rem;}
+        }
+        @media only screen and (max-width: 600px){
+          .main_products{ width:99%; margin:0.5%; }
+        }
+    </style>
+
+          
+        <div class="container-fluid row mb-5 pb-5">
+            {% for product in products %}
+                <div class="col-md-4 position-relative">
+                    <a href="{{ product.get_absolute_url }}" >
+                        <img class='w-100 img' src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                    </a>
+                    {% if user.is_authenticated %}
+                        <div class='like position-absolute rounded border' style='top:0px;left:0px;'>
+                            {% if not category %}
+                                <a href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle Like' >
+                                    <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                    {{ product.total_likes }}
+                                </a>
+                            {% else %}
+                                <a href="{% url 'add_like_product_category' id=product.id slug=product.slug category_slug=category %}" class='btn rounded-circle Like' >
+                                    <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                    {{ product.total_likes }}
+                                </a>
+                            {% endif %}                             
+                        </div>
+                    {% endif %}
+                    <div class='d-flex justify-content-around'>
+                        <a href="{{ product.get_absolute_url }}"><b>{{ product.name }}</b></a>
+                        <div> <b>${{ product.price }}</b> </div>
+                    </div>
+                    <br>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+
+
+
+
+    {% if products.has_other_pages %}
+        <footer class="d-flex {% if products.paginator.page_range|length < 30  %} justify-content-center {% endif %} align-item-center">
+            
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  {% if products.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{products.previous_page_number}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  {% endif %}
+
+                  {% for i in products.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                  {% endfor %}
+
+                  {% if products.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+            </nav>
+        </footer>
+    {% endif%}
+
+
+    
+   
+{% endblock %}

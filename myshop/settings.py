@@ -16,7 +16,6 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -32,6 +31,9 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'create_store.apps.CreateStoreConfig',
     'scraping.apps.ScrapingConfig',
+    'payments.apps.PaymentsConfig',
+
+    'paypal.standard.ipn',
 
     'bootstrap4',
     'fontawesomefree',
@@ -125,4 +127,4 @@ CART_SESSION_ID = 'cart'
 
 
 PAYPAL_RECEIVER_EMAIL = 'redaredaeskouni@gmail.com'
-PAYPAL_TEST = True 
+PAYPAL_TEST = True

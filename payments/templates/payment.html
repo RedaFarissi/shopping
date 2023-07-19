@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% load static %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% endblock title %}
+
+
+
+
+{% block content %}
+    <style>
+        .payments{ height:470px}
+    </style>
+
+    <div class='payments d-flex justify-content-center align-items-center'>
+        <div class='w-25 d-flex justify-content-center align-items-center'>
+            <!-- writes out the form tag automatically -->
+            {{ form.render }}
+        </div>
+    </div>
+{% endblock content %}

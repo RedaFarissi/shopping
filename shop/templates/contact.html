@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block content %}
+    <style>
+        body{background-color: #f5f4ef; padding-bottom:50px;}
+        .contact{ height:90vh; padding:55px; width:75%; box-shadow: 2px 2px 9px rgba(0 0 0/35%);}
+        .contact>h1{ font-weight:700; margin-top:30px; }
+        .contact>h6{ font-weight:600; font-size:110%; }
+        .line{ width:88px; background-color:red; height:2px; }
+        .contact_box{ 
+            position:absolute; right:-9%; top:calc( 45vh - 190px ); width:340px;
+            height:350px; border-radius:5px; background-color:white;border: 0.9rem solid #ffd3b4; 
+            box-shadow:2px 2px 5px rgba(0 0 0/22%); padding:9px
+        }
+        input, textarea{ 
+            height:49px; border:0.9px solid rgba(0 0 0/65%); padding-left:9px;     
+            margin-top:0.9rem; border-radius:5px; outline:none
+        }
+        input[name='name'] , input[name='email']{ width: 40%; }
+        .textarea{ width: 60%; height:30vh; padding-top:9px }
+        .button{ position:absolute; bottom:2.5rem; right:calc(50% - 90px); background-color:#ffd3b4; }
+        #collection{ width:max-width; }
+        @media only screen and (max-width:999px){
+            body{background-color:white}
+            .contact{ width:100%; box-shadow:none; }
+            .contact_box{ position:static; border:none; box-shadow:none; width:100%; margin-top:2rem}
+            .textarea,input[name='name'] , input[name='email']{ width: 100%; }
+            .button{ position:static; font-size:90%;width:100%; margin-top:9px}
+        }
+    </style>
+    
+    <div class="contact bg-white m-auto position-relative" >
+        <h1>CONTACT US</h1>
+        <p class="line"><p>
+        <h6> GET AN EXPERIENCE </h6>
+        <div class='text-secondary'> Response guaranteed within 48 hours! </div>
+
+        <form action="{% url 'send_email' %}" method="POST">
+            {% csrf_token %}
+            <input type='email' name='email' placeholder='Your email' required/><br>
+            <input type='text' name='name' placeholder='Title of the email (subject)' required /><br>
+            <textarea name='message' placeholder='Your message' class='textarea'> </textarea>
+            <button type='submit' class='button btn bg-dark px-5 py-2 fs-5 text-light'> Send </button>
+        </form>
+
+        <div class="contact_box">
+            <h5 id="collection" class='my-3 ms-3'>MY SHOP</h5>
+            <div class='d-flex'> 
+                <i class="fa-regular fa-location-dot mt-1 mx-3"></i> 
+                <p>Centre d'affaires BURJ MALAK, Entrée B, 2ème étage (Près du pont Q.I. Sidi Ghanem) Marrakech .</p>
+            </div>
+            <div class='d-flex'> 
+                <i class="fa-solid fa-phone  mt-1 mx-3"></i>
+                <p> +212 5 24 35 57 57 </p>         
+            </div>
+            <div class='d-flex'> 
+                <i class="fa-solid fa-phone  mt-1 mx-3"></i>
+                <p> +212 6 06 70 56 46 </p>         
+            </div>
+            <div class='d-flex'> 
+                <i class="fa-solid fa-envelope mt-1 mx-3"></i>
+                <p> redaesskouni@gmail.com </p>         
+            </div>
+            <div class='d-flex justify-content-center align-items-center'>
+                <i class="fa-brands fa-facebook fs-3"></i>
+                <i class="fa-brands fa-instagram fs-3 mx-3"></i>
+                <i class="fa-brands fa-linkedin fs-3"></i>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

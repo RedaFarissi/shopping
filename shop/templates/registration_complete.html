@@ -3,13 +3,22 @@
 
 
 {% block title %}
-    Registration Complete
+    Complete Registration
 {% endblock %}
 
 
 {% block content %}
-<div id="content">
-    <h2>Registration Complete</h2>
-    <p>Thank you for registering. Please check your email to activate your account.</p>
+<style>
+    .registration{ height:70vh; }
+    .box_registration{ 
+        border:0.9px solid rgba(0 0 0/50%); padding:20px; border-radius:5px; background-color:#f5f4ef;
+        box-shadow: 5px 5px 20px rgba(0 0 0/12%);
+    }
+</style>
+<div class="container d-flex justify-content-center align-items-center registration">
+    <div class='box_registration'>
+        <h2>Registration Complete</h2>
+        <p>Thank you for registering. Please <b> check your email to activate your account</b>.</p>
+    </div>
 </div>
 {% endblock %}

@@ -9,30 +9,37 @@
 {% block content %}
 <style>
     .img-detail{ max-height: 80vh; object-fit:contain }
+    .slected{ background-color: #ffd3b4}
+
+    @media only screen and (max-width: 999px){
+        .detail_page{ padding-bottom: 90px; }
+    }
 </style>
-<div class='row m-2'> 
+<div class='row m-2 detail_page' > 
     <img class='img-detail col-md-6' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">
-    <div class='col-md-6'>
-        <h1>{{ product.name }}</h1>
-        <h2> <a href="{{ product.category.get_absolute_url }}"> {{ product.category }} </a> </h2>
-        <p class="price"> ${{ product.price }} </p>
-        
-        {{ product.description|linebreaks }}
+    <div class='col-md-6 d-flex align-items-center'>
+        <div>
+            <h1>{{ product.name }}</h1>
+            <h2> <a href="{{ product.category.get_absolute_url }}"> {{ product.category }} </a> </h2>
+            <p class="price"> ${{ product.price }} </p>
+            
+            {{ product.description|linebreaks }}
 
 
-        {% if user.is_authenticated and product.user == request.user %}
-            <form method="POST" action="{% url 'product_detail' id=product.id slug=product.slug %}">
-                {% csrf_token %}
-                <button type="submit" class='btn btn-outline-danger'> Delete </button>
-            </form>
-        {% else  %}
-            <form action="{% url "cart:cart_add" product.id %}" method="post">
-                {{ cart_product_form }}
-                {% csrf_token %}
-                <br/>
-                <input type="submit" value="Add to cart" class='btn btn-primary mt-4'>
-            </form>  
-        {% endif  %}
+            {% if user.is_authenticated and product.user == request.user %}
+                <form method="POST" action="{% url 'product_detail' id=product.id slug=product.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" class='btn btn-outline-danger'> Delete </button>
+                </form>
+            {% else  %}
+                <form action="{% url "cart:cart_add" product.id %}" method="post">
+                    {{ cart_product_form }}
+                    {% csrf_token %}
+                    <br/>
+                    <input type="submit" value="Add to cart" class='btn slected border-dark mt-4'>
+                </form>  
+            {% endif  %}
+        </div>
     </div>
 </div>
 
