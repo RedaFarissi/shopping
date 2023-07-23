@@ -5,9 +5,13 @@
     Create Store
 {% endblock %}
 
+{% block head %}
+    <style> form>div{ margin-top:1.3rem}  </style>
+{% endblock %}
+
 
 {% block content %}
-<style> form>div{ margin-top:1.3rem}  </style>
+
 <div id="content">
     <form action="#" method="POST">
         {% csrf_token %}

@@ -6,12 +6,11 @@
     Successful
 {% endblock %}
 
-{% block content %}
-    <style>
-        .box-suucessful{  height: 70vh;}
-        .fa_check { color:green; font-size: 190px;}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'successful_email_send.css'%}" />
+{% endblock %}
 
-    </style>
+{% block content %}
     <div class="box-suucessful d-flex justify-content-center align-items-center">
         <i class="fa-solid fa-check fa_check "></i> 
         <h5>  message send Successfully </h5>
