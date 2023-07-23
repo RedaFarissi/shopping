@@ -10,7 +10,11 @@ urlpatterns = [
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('create_store/', include("create_store.urls")) ,
-    # path('paypal/', include("paypal.standard.ipn.urls")),
+    path('contact/', include("contact.urls")) ,
+    path('signup/', include("signup.urls")) ,
+    path('products_api/', include("getApiProducts.urls")) ,
+   
+    path('paypal/', include("paypal.standard.ipn.urls")),
     path('payments/', include("payments.urls")),
     path('s/', include("scraping.urls")) ,
     path('', include("shop.urls")) ,

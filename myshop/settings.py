@@ -1,20 +1,12 @@
 from pathlib import Path
 import os
+import django
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-2wf!^9tjx04nwo#2(5hb3sj$l2x^w(km*r44rqaxo)-%fh7(o='
 
 DEBUG = True
-
-
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with the hostname of your email server
-EMAIL_HOST_USER = 'redaesskouni@gmail.com'  # Replace with your email address
-EMAIL_HOST_PASSWORD = 'svytlnnjlsojpdqc'  # Replace with your email account password
-EMAIL_PORT = 587 # Replace with the port number of your email server
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 
 ALLOWED_HOSTS = []
 
@@ -31,6 +23,10 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'create_store.apps.CreateStoreConfig',
     'scraping.apps.ScrapingConfig',
+    'contact.apps.ContactConfig',
+    'signup.apps.SignupConfig', 
+    'getApiProducts.apps.GetapiproductsConfig', 
+    
     'payments.apps.PaymentsConfig',
 
     'paypal.standard.ipn',
@@ -89,7 +85,6 @@ DATABASES = {
         'PASSWORD': 'reda0606705646',
         'HOST': 'localhost',
         'PORT': '3306',
-
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
@@ -126,5 +121,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = 'cart'
 
 
-PAYPAL_RECEIVER_EMAIL = 'redaredaeskouni@gmail.com'
-PAYPAL_TEST = True
+# PAYPAL_RECEIVER_EMAIL = 'redaesskouni@gmail.com'
+# PAYPAL_TEST = True
+
+
+
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with the hostname of your email server
+EMAIL_HOST_USER = 'redaesskouni@gmail.com'  # Replace with your email address
+EMAIL_HOST_PASSWORD = 'svytlnnjlsojpdqc'  # Replace with your email account password
+EMAIL_PORT = 587  # Replace with the port number of your email server
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

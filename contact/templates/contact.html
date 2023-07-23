@@ -14,16 +14,16 @@
         .contact>h6{ font-weight:600; font-size:110%; }
         .line{ width:88px; background-color:red; height:2px; }
         .contact_box{ 
-            position:absolute; right:-9%; top:calc( 45vh - 190px ); width:340px;
-            height:350px; border-radius:5px; background-color:white;border: 0.9rem solid #ffd3b4; 
+            position:absolute; right:-9%; top:calc( 45vh - 190px ); width:340px; height:350px; 
+            border-radius:5px; background-color:white;border: 0.9rem solid #ffd3b4; 
             box-shadow:2px 2px 5px rgba(0 0 0/22%); padding:9px
         }
         input, textarea{ 
             height:49px; border:0.9px solid rgba(0 0 0/65%); padding-left:9px;     
-            margin-top:0.9rem; border-radius:5px; outline:none
+            margin-top:0.9rem; border-radius:5px; outline:none;
         }
         input[name='name'] , input[name='email']{ width: 40%; }
-        .textarea{ width: 60%; height:30vh; padding-top:9px }
+        .textarea{ width: 60%; height:30vh; padding-top:9px; resize:none; }
         .button{ position:absolute; bottom:2.5rem; right:calc(50% - 90px); background-color:#ffd3b4; }
         #collection{ width:max-width; }
         @media only screen and (max-width:999px){
@@ -43,8 +43,8 @@
 
         <form action="{% url 'send_email' %}" method="POST">
             {% csrf_token %}
-            <input type='email' name='email' placeholder='Your email' required/><br>
             <input type='text' name='name' placeholder='Title of the email (subject)' required /><br>
+            <input type='email' name='email' placeholder='Your email' required/><br>
             <textarea name='message' placeholder='Your message' class='textarea'> </textarea>
             <button type='submit' class='button btn bg-dark px-5 py-2 fs-5 text-light'> Send </button>
         </form>
@@ -57,7 +57,7 @@
             </div>
             <div class='d-flex'> 
                 <i class="fa-solid fa-phone  mt-1 mx-3"></i>
-                <p> +212 5 24 35 57 57 </p>         
+                <p> +212 5 00 00 00 00 </p>         
             </div>
             <div class='d-flex'> 
                 <i class="fa-solid fa-phone  mt-1 mx-3"></i>

@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block content %}
+
 <style>
     .img-detail{ max-height: 80vh; object-fit:contain }
     .slected{ background-color: #ffd3b4}
-
-    @media only screen and (max-width: 999px){
-        .detail_page{ padding-bottom: 90px; }
-    }
+    .border_dark{ border:0.1px solid rgba(0 0 0/50%); }
+    @media only screen and (max-width: 999px){ .detail_page{ padding-bottom: 90px; } }
 </style>
+
 <div class='row m-2 detail_page' > 
     <img class='img-detail col-md-6' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">
     <div class='col-md-6 d-flex align-items-center'>
@@ -36,7 +36,7 @@
                     {{ cart_product_form }}
                     {% csrf_token %}
                     <br/>
-                    <input type="submit" value="Add to cart" class='btn slected border-dark mt-4'>
+                    <input type="submit" value="Add to cart" class='btn slected border_dark mt-4'>
                 </form>  
             {% endif  %}
         </div>
