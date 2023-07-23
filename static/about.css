@@ -1,0 +1,7 @@
+.imge{height: 50vh; object-fit:contain; }
+.rose{ color:#fdd0b1}
+
+@media only screen and (max-width:768px) {
+    .imge{ margin-bottom:2rem}
+   .box-about{ width:97%; margin-left:3%}
+}

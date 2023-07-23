@@ -1,0 +1,7 @@
+.img-detail{ max-height: 80vh; object-fit:contain }
+.slected{ background-color: #ffd3b4}
+.border_dark{ border:0.1px solid rgba(0 0 0/50%); }
+
+@media only screen and (max-width: 999px){ 
+    .detail_page{ padding-bottom: 90px; } 
+}

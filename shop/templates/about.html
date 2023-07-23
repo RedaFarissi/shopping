@@ -3,18 +3,14 @@
 
 
 {% block title %}
-    Contact
+    About Us
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'about.css' %}">
 {% endblock %}
 
 {% block content %}
-    <style>
-        .imge{height: 50vh; object-fit:contain; }
-        .rose{ color:#fdd0b1}
-        @media only screen and (max-width:768px) {
-            .imge{ margin-bottom:2rem}
-           .box-about{ width:97%; margin-left:3%}
-        }
-    </style>
     <div class="container-fluid row">
         <img src="{% static 'img/Kayo3PLGraphic.png' %}" class="col-md-6 imge" />
         <div class="col-md-6 bg d-flex justify-content-center align-items-center box-about">

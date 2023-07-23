@@ -6,15 +6,12 @@
     {{ product.name }}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'detail.css' %}">
+{% endblock %}
+
+
 {% block content %}
-
-<style>
-    .img-detail{ max-height: 80vh; object-fit:contain }
-    .slected{ background-color: #ffd3b4}
-    .border_dark{ border:0.1px solid rgba(0 0 0/50%); }
-    @media only screen and (max-width: 999px){ .detail_page{ padding-bottom: 90px; } }
-</style>
-
 <div class='row m-2 detail_page' > 
     <img class='img-detail col-md-6' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">
     <div class='col-md-6 d-flex align-items-center'>

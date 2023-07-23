@@ -1,0 +1,48 @@
+*{ padding:0px; margin:0px; box-sizing:border-box; }
+body{ position:relative; }
+body::-webkit-scrollbar { width: 10px; }
+body::-webkit-scrollbar-track { background-color:white; border:0.3px solid black;  }
+body::-moz-scrollbar-track { background-color: white;border-radius: 2px;box-shadow: white; }
+body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+.bg{ background-color: #f5f4ef;}
+
+.logo{ font-size:30px; font-weight:500; margin-left:2rem}
+.usser>a { text-decoration:none; color:black; width:40px; height:40px;  }
+.usser , .cart, .store , .login{ width:47px; height:47px; cursor: pointer; }
+.usser:hover , .cart:hover , .store:hover , .login:hover { background-color: rgba(0 0 0/55%); color:white }
+a{ color: rgba(0 0 0/85%); text-decoration: none}  
+.store>a:hover { color:white ; }
+h1, h2, h3, h4, h5 , h6 { font-family: 'Ubuntu', sans-serif; font-weight:normal; }
+main{ margin:2rem;}
+
+
+.header{ height:90px; background-color:#f5f4ef; margin-bottom:2rem}
+#collection{ font-weight:700; cursor:pointer; text-shadow:2px 2px 20px #f6e4da; }  
+.hedaer-center-item ,  button>a{ text-decoration: none; cursor:pointer;}
+.hedaer-center-item { transition: font-size 2s , margin-top 2s;}
+.hedaer-center-item:hover { font-size:100%; margin-top:-3px;}
+.hedaer-right-btn{ font-weight:500}
+button>a{ color: black}
+
+@media only screen and (max-width:1100px) {
+  .header{  margin-bottom:0.5rem}
+  .navbar{ width:100%;}
+  .me-3{ margin-right:0}
+  main{ margin:0.5rem; }
+}
+@media only screen and (max-width: 999px){
+  .header{  margin-bottom:0.3rem}
+
+  body{ font-size:95%;}
+  .header-right{  
+    position:fixed; bottom:0rem;  background-color:#f1f1f1;  width:90%; z-index:999; height:65px; 
+    display:flex; justify-content:space-around; align-items:center; border:0.9px solid black; 
+    border-bottom:none; border-radius: 5px 5px 0px 0px; box-shadow:2px 2px 20px rgba(0 0 0/30%);
+  }
+  main{ margin:0 }
+}
+@media only screen and (max-width: 600px){
+  body{ font-size:89%;}
+  .hedaer-right-btn{  font-size:90%; }
+}
