@@ -7,6 +7,7 @@ body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
 body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
 .bg{ background-color: #f5f4ef;}
 
+
 .logo{ font-size:30px; font-weight:500; margin-left:2rem}
 .usser>a { text-decoration:none; color:black; width:40px; height:40px;  }
 .usser , .cart, .store , .login{ width:47px; height:47px; cursor: pointer; }
@@ -15,8 +16,6 @@ a{ color: rgba(0 0 0/85%); text-decoration: none}
 .store>a:hover { color:white ; }
 h1, h2, h3, h4, h5 , h6 { font-family: 'Ubuntu', sans-serif; font-weight:normal; }
 main{ margin:2rem;}
-
-
 .header{ height:90px; background-color:#f5f4ef; margin-bottom:2rem}
 #collection{ font-weight:700; cursor:pointer; text-shadow:2px 2px 20px #f6e4da; }  
 .hedaer-center-item ,  button>a{ text-decoration: none; cursor:pointer;}

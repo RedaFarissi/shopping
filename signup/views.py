@@ -5,29 +5,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from .forms import SignUpForm
 
-from cryptography.fernet import Fernet
-
-
-
-
-key_encrypt = "QredasPn3"
-
-def encrypt_string(message, key):
-    fernet = Fernet(key)
-    encrypted_message = fernet.encrypt(message.encode())
-    return encrypted_message
-
-def decrypt_string(encrypted_message, key):
-    fernet = Fernet(key)
-    decrypted_message = fernet.decrypt(encrypted_message).decode()
-    return decrypted_message
-
-
-
-
-
-
-
 # we use this function to create Sign Up  
 def signup(request):
     # get data from browser if data send by user  if not create fields

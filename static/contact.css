@@ -2,7 +2,7 @@ body{background-color: #f5f4ef; padding-bottom:50px;}
 .contact{ height:90vh; padding:55px; width:75%; box-shadow: 2px 2px 9px rgba(0 0 0/35%);}
 .contact>h1{ font-weight:700; margin-top:30px; }
 .contact>h6{ font-weight:600; font-size:110%; }
-.line{ width:88px; background-color:red; height:2px; }
+.line{ width:90px; background-color:#ffd3b4; height:2.5px; }
 .contact_box{ 
     position:absolute; right:-9%; top:calc( 45vh - 190px ); width:340px; height:350px; 
     border-radius:5px; background-color:white;border: 0.9rem solid #ffd3b4; 

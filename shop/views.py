@@ -4,14 +4,6 @@ from .models import Product, Category , Like
 from django.db.models import Count
 from django.core.paginator import Paginator
 from django.db.models import Q 
-# from django.utils.text import slugify
-# import requests
-# from django.urls import resolve
-# from django.core.files import File
-# from django.core.files.temp import NamedTemporaryFile
-# from django.core.files.base import ContentFile
-# import os
-from django.conf import settings
 
 
 

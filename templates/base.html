@@ -12,14 +12,32 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
         <link rel="stylesheet" href="{% static 'base.css' %}">
-        {% block head %}  {% endblock %}
+        {% block head %} 
+        {% endblock %}
+        <style>
+          .is_superuser{ position:fixed; justify-content:center; bottom:3.3rem; right:0.9rem; z-index:988; }
+          #is_superuser_box{ display:none; margin-bottom:-4px; padding-bottom:4px}
+          .btn-fa{ display:block; background-color:#ffd3b4; width:40px; height:40px; margin-top:3px; }
+        </style>
     </head>
     <body>
       {% if user.is_superuser%}
-        <a href="{% url 'add_some_product_from_api_to_database' %}" class="btn border border-1 border-dark rounded-circle bg-success text-light" title='Products API' style='position:fixed; bottom:3rem; right:0.9rem;z-index:988'>
-          <i class="fa-regular fa-plus"></i>
-        </a>
+      <div class="is_superuser text-light">
+        <div id='is_superuser_box' onmouseover="fa_lock_over()" onmouseout="fa_lock_out()">
+          <a href="{% url 'add_some_product_from_api_to_database' %}" class="btn-fa btn rounded-circle" title='Products API'>
+            <i class="fa-regular fa-plus"></i>
+          </a>
+          <a href="{% url 'all_message_from_user' %}" title='All Message From User' class="btn-fa btn rounded-circle">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+       
+        <buuton class="btn-fa btn rounded-circle" title='Jst for admin' onmouseover="fa_lock_over()" onmouseout="fa_lock_out()">
+          <i class="fa-solid fa-lock"></i>
+        </buuton>
+      </div>
       {% endif %}
+    
 
       <header class='d-flex justify-content-around align-items-center header'>
         <div class='mt-2'>
@@ -65,5 +83,13 @@
         {% endblock %}
 
       <script src="{% static 'bootstrap.js' %}"></script>
+      <script>
+        function fa_lock_over(){
+          document.getElementById("is_superuser_box").style.display = "block"
+        }
+        function fa_lock_out(){
+          document.getElementById("is_superuser_box").style.display = "none"
+        }
+      </script>
     </body>
 </html>
