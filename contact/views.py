@@ -32,8 +32,7 @@ def allMessageFromUser(request):
 
 def replyToTheUser(request, email , pk ):
     message = request.POST['message']
-    subject = request.POST['subject']
-    send_mail(subject , message, settings.EMAIL_HOST_USER, [email])
+    send_mail("My Shop" , message, settings.EMAIL_HOST_USER, [email])
     contact = get_object_or_404(ContactUser, pk=pk , email=email)
     contact.vu = True
     contact.save()
