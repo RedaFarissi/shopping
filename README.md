@@ -2,13 +2,13 @@
 
 ### install python 
 
-### To install virtualenv run :
+### To install virtualenv , run :
 pip install virtualenv 
  
-### To create virtualenv run :
+### To create virtualenv , run :
 python -m virtualenv Your_Folder_Name
 
-### To change directory to Your_Folder_Name run , run :
+### To change directory to Your_Folder_Name , run :
 cd Your_Folder_Name
 
 
