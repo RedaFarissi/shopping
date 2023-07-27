@@ -33,7 +33,7 @@ python manage.py runserver
 ### Home page :
 http://127.0.0.1:8000/
 
-### when you whant to see admin page go to :
+### When you want to see admin page go to : :
 http://127.0.0.1:8000/admin/
 
 
