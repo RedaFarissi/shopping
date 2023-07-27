@@ -1,28 +1,34 @@
-from django.shortcuts import render
-
+import uuid
+from django.shortcuts import render , get_object_or_404
 from django.urls import reverse
-from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from paypal.standard.forms import PayPalPaymentsForm
+from django.conf import settings
+from orders.models import Order
 
+def process_payment(request):
+    order_id = request.session.get('order_id', None)
+    order = get_object_or_404(Order, id=order_id)
     
-
-def view_that_asks_for_money(request):
+    host = request.get_host()
+    
     paypal_dict = {
-        "business": "redaredaeskouni@gmail.com",
-        "amount": "1.00",
-        "item_name": "name of the item",
-        "invoice": "EMe7LGGXl1PUMYL7SUnlX8Mq4poVpaorCZX6ypxi9ZBEPp0bgF0m23Jox9iMcNvggjh4kXRQFG1A6327",
-        "notify_url": request.build_absolute_uri(reverse('paypal-ipn')),
-        "return": request.build_absolute_uri(reverse('successful')),
-        "cancel_return": request.build_absolute_uri(reverse('concelled')),
-        "custom": "premium_plan",  # Custom command to correlate to some function later (optional)
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': order.get_total_cost() ,
+        'item_name': order.id,
+        'invoice': str(uuid.uuid4()),
+        'currency_code': 'USD',
+        'notify_url': f'http://{host}{reverse("paypal-ipn")}' ,
+        'return_url': f'http://{host}{reverse("payment_done")}',
+        'cancel_return': f'http://{host}{reverse("payment_cancelled")}',
     }
     form = PayPalPaymentsForm(initial=paypal_dict)
-    context = {"form": form}
-    return render(request, "payment.html", context)
+    return render(request, 'process_payment.html', {'form': form , 'order':order})
 
-def concelled(request):
-    return render(request, "concelled.html")
+@csrf_exempt
+def payment_done(request):
+    return render(request, 'payment_done.html')
 
-def successful(request):
-    return render(request, "successful.html")
+@csrf_exempt
+def payment_canceled(request):
+    return render(request, 'payment_cancelled.html')

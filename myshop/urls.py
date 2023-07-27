@@ -7,6 +7,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')) ,
     path('admin/', admin.site.urls),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('create_store/', include("create_store.urls")) ,
@@ -14,7 +16,6 @@ urlpatterns = [
     path('signup/', include("signup.urls")) ,
     path('products_api/', include("getApiProducts.urls")) ,
    
-    path('paypal/', include("paypal.standard.ipn.urls")),
     path('payments/', include("payments.urls")),
     path('s/', include("scraping.urls")) ,
     path('', include("shop.urls")) ,

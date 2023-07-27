@@ -1,9 +1,9 @@
-from django.urls import path , include
+from django.urls import path 
 from . import views
-urlpatterns = [
-    path("successful/", views.successful , name="successful" ),
-    path("concelled/", views.concelled , name="concelled" ),
-    path("", views.view_that_asks_for_money , name="view_that_asks_for_money "),
 
-    path('paypal/', include("paypal.standard.ipn.urls")),
+
+urlpatterns = [
+    path('process-payment/', views.process_payment , name='process_payment'),  
+    path('payment-done/', views.payment_done, name='payment_done'),
+    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
 ]

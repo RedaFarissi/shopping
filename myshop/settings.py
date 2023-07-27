@@ -26,10 +26,10 @@ INSTALLED_APPS = [
     'contact.apps.ContactConfig',
     'signup.apps.SignupConfig', 
     'getApiProducts.apps.GetapiproductsConfig', 
-    
     'payments.apps.PaymentsConfig',
 
     'paypal.standard.ipn',
+   
 
     'bootstrap4',
     'fontawesomefree',
@@ -121,10 +121,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = 'cart'
 
 
-# PAYPAL_RECEIVER_EMAIL = 'redaesskouni@gmail.com'
-# PAYPAL_TEST = True
-
-
 
 EMAIL_HOST = 'smtp.gmail.com'  # Replace with the hostname of your email server
 EMAIL_HOST_USER = 'redaesskouni@gmail.com'  # Replace with your email address
@@ -132,3 +128,9 @@ EMAIL_HOST_PASSWORD = 'svytlnnjlsojpdqc'  # Replace with your email account pass
 EMAIL_PORT = 587  # Replace with the port number of your email server
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+# PAYPAL settings
+PAYPAL_RECEIVER_EMAIL = 'sandbox@mail.com'
+#PAYPAL_RECEIVER_EMAIL = 'redaredaeskouni@mail.com'
+PAYPAL_TEST = True

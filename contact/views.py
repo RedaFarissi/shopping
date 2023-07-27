@@ -25,6 +25,7 @@ def sendEmailToAdmin(request):
 def successfulEmailSend(request):
     return render(request , 'successful_email_send.html' )
 
+
 def allMessageFromUser(request):
     contact_users = ContactUser.objects.order_by('-contact_date') 
     return render(request , 'all_message_from_user.html' , {'contact_users': contact_users})
