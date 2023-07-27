@@ -3,16 +3,24 @@
 
 ### install python 
 
-### to install virtualenv run :
+### To install virtualenv run :
 pip install virtualenv 
  
-### to create virtualenv run :
+### To create virtualenv run :
 python -m virtualenv Your_Folder_Name
 
-### to change derictory to Your_Folder_Name run:
+### To change directory to Your_Folder_Name run:
 cd Your_Folder_Name
 
 
-### to activate virtualenv run :
+### To activate virtualenv run :
 .\\Scripts\activate 
 
+### To clone project from github :
+git clone https://github.com/RedaFarissi/shopping.git
+
+### To change directory to project clone from github :
+cd shopping
+
+### To install all packages used use :
+pip install -r requirements.txt
