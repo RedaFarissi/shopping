@@ -9,6 +9,11 @@ from .forms import SignUpForm
 def signup(request):
     # get data from browser if data send by user  if not create fields
     form = SignUpForm(request.POST or None) 
+
+    # add class to html
+    for _ , field in form.fields.items():
+        field.widget.attrs['class'] = 'form-control form-control-lg'
+
     # if data is valid 
     if form.is_valid():
         # get data valid and save it in variable user  

@@ -5,64 +5,86 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'cart_detail.css'%}" />
+  <style>
+    body{ background-color:#f5f4ef;;}
+    #Remove{width:0rem; height:0rem;}
+    .cursor-pointer{cursor:pointer}
+  </style>
 {% endblock %}
 
 {% block content %}
-<div id="content">
-  <h1>Your shopping cart</h1>
-  <table class="w-100 table table-hover">
-    <thead class='bg-secondary text-light'>
-      <tr>
-        <th>Image</th>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Remove</th>
-        <th>Unit price</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in cart %}
+<section class="h-100">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+          <div>
+            <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">${{ cart.get_total_price }} </a></p>
+          </div>
+        </div>
+        {% for item in cart %}
         {% with product=item.product %}
-          <tr>
-            <td>
-              <a href="{{ product.get_absolute_url }}">
-                <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class='ms-3'>
-              </a>
-            </td>
-            <td>{{ product.name }}</td>
-            <td>
-              <form action="{% url "cart:cart_add" product.id %}" method="post">
-                {{ item.update_quantity_form.quantity }}
-                {{ item.update_quantity_form.override }}
-                <input type="submit" value="Update">
-                {% csrf_token %}
-              </form>
-            </td>
-            <td>
-              <form action="{% url "cart:cart_remove" product.id %}" method="post">
-                <input type="submit" value="Remove">
-                {% csrf_token %}
-              </form>
-            </td>
-            <td class="num">${{ item.price }}</td>
-            <td class="num">${{ item.total_price }}</td>
-          </tr>
+        <div class="card rounded-3 mb-4">
+          <div class="card-body p-4">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-md-2 col-lg-2 col-xl-2">
+                <a href="{{ product.get_absolute_url }}">
+                  <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" 
+                  class='img-fluid rounded-3'>
+                </a>
+          
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-3">
+                <p class="lead fw-normal mb-2">{{ product.name }}</p>
+                <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                <form action="{% url "cart:cart_add" product.id %}" method="post">
+                  {{ item.update_quantity_form.quantity }}
+                  {{ item.update_quantity_form.override }}
+                  <input type="submit" value="Update">
+                  {% csrf_token %}
+                </form>
+                </button>
+              </div>
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h5 class="mb-0">${{ item.price }}<br>${{ item.total_price }}</h5>
+              </div>
+              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <a href="#" class="text-danger"></a>
+                <form action="{% url "cart:cart_remove" product.id %}" method="post">
+                  <input type="submit" value="Remove" id='Remove'/> 
+                  <i class="fas fa-trash fa-lg text-danger cursor-pointer" onclick="remov_submit()"></i>
+
+                  {% csrf_token %}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {% endwith %}
-      {% endfor %}
+        {% endfor %}
+        
+
       
-      <tr class="total mt-2">
-        <td class='p-4'><b>Total</b></td>
-        <td colspan="4"></td>
-        <td class="num"><b>${{ cart.get_total_price }}</b></td>
-      </tr>
-    </tbody>
-  </table>
-  <p class="text-right">
-    <a href="{% url "index" %}" class="btn light">Continue shopping</a>
-    <a href="{% url "orders:order_create" %}" class="btn btn-primary">
-      Checkout
-     </a>
-  </p>
-</div>
+
+   
+
+        <div class="card">
+          <div class="card-body">
+            <a href="{% url "orders:order_create" %}" class="btn light btn-lg" style="background-color: #ffd3b4;float:right">Proceed to Pay</button>
+            <a href="{% url "index" %}" class="btn pt-2 pe-4"  style="float:right">Continue shopping</a>
+            <p class='pt-2'><b>Total Price &nbsp; : &nbsp;</b>${{ cart.get_total_price }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  function remov_submit(){document.getElementById("Remove").click()}
+</script>
 {% endblock %}

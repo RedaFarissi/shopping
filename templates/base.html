@@ -64,13 +64,10 @@
                 <i class="fa-solid fa-right-to-bracket"></i> 
               </a>
             
-              <a href="{% url 'signup' %}" class='hedaer-right-btn btn border border-1 border-dark' title='Create Account'>
+              <a href="{% url 'signup' %}" class='hedaer-right-btn btn border border-1 border-dark' title='Register'>
                 <i class="fa-solid fa-user-plus"></i>
               </a>
             {% endif %}
-            <a class="hedaer-right-btn btn border border-1 border-dark" title='Register'> 
-                <i class="fa-regular fa-plus"></i> 
-            </a>
             <a href="{% url "cart:cart_detail" %}" class="hedaer-right-btn btn border border-1 border-dark position-relative" title='cart'> 
                 <i class="fa-solid fa-cart-shopping"></i> 
                 <div class='badge rounded-circle text-dark position-absolute {% if cart|length > 0 %} slected {% else %} bg-warning {% endif %}' style='right:-7px;top:-7px;'> {{ cart|length  }} </div>

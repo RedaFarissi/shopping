@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-2wf!^9tjx04nwo#2(5hb3sj$l2x^w(km*r44rqaxo)-%fh7(o=
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'social_django',
 
     'cart.apps.CartConfig',
     'shop.apps.ShopConfig',
@@ -41,7 +43,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console 
 # Configure email settings for production use
 
 AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.linkedin.LinkedinOAuth2',  
+
     'django.contrib.auth.backends.ModelBackend',  # Default Django authentication backend
+
 ]
 
 LOGIN_URL = '/accounts/login/' 
@@ -54,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',  
 ]
 
 ROOT_URLCONF = 'myshop.urls'
@@ -70,6 +78,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -134,3 +144,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 PAYPAL_RECEIVER_EMAIL = 'sandbox@mail.com'
 #PAYPAL_RECEIVER_EMAIL = 'redaredaeskouni@mail.com'
 PAYPAL_TEST = True
+
+
+## for Facebbok authontication
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'index'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '593567136277047'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '7aa09b2287e5c666d38eca596a51f5f9'  # App Secret
+
+
+## for Linkedin authontication
+# SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = '78qdk6g7pcdrhh'
+# SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET  = 'iHTYGBJGJBoe6muN'
+# SOCIAL_AUTH_LINKEDIN_OAUTH2_SCOPE = ['r_liteprofile', 'r_emailaddress']

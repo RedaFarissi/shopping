@@ -18,6 +18,7 @@ urlpatterns = [
    
     path('payments/', include("payments.urls")),
     path('s/', include("scraping.urls")) ,
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('', include("shop.urls")) ,
 ]
 

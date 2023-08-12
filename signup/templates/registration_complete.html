@@ -7,18 +7,26 @@
 {% endblock %}
 
 
-{% block content %}
+{% block head %}
 <style>
+    body{ background-color:#f5f4ef; back}
+    .box{ box-shadow:2px 2px 7px rgba(0 0 0/20%); background-color:white}
     .registration{ height:70vh; }
     .box_registration{ 
-        border:0.9px solid rgba(0 0 0/50%); padding:20px; border-radius:5px; background-color:#f5f4ef;
-        box-shadow: 5px 5px 20px rgba(0 0 0/12%);
+        padding:20px; border-radius:5px; background-color:white;
     }
 </style>
+{% endblock %}
+
+{% block content %}
+
 <div class="container d-flex justify-content-center align-items-center registration">
-    <div class='box_registration'>
-        <h2>Registration Complete</h2>
-        <p>Thank you for registering. Please <b> check your email to activate your account</b>.</p>
+    <div class='box d-flex align-items-center'>
+        <img src="{% static 'img/success.jpg' %}" class='w-25'/>  
+        <div class='box_registration'>
+            <h2 style="color:#15a34a">Registration Complete</h2>
+            <p>thank you for registering. Please <b> check your email to activate your account</b>.</p>
+        </div>
     </div>
 </div>
 {% endblock %}
