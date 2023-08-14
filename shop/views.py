@@ -48,9 +48,6 @@ def about(request):
     return render(request, "about.html")
 
 
-
-
-
 def add_like_product_index(request , id , slug , category_slug=None):
     #get the product 
     product = get_object_or_404(Product, id=id , slug=slug )

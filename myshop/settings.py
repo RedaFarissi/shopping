@@ -24,7 +24,6 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'orders.apps.OrdersConfig',
     'create_store.apps.CreateStoreConfig',
-    'scraping.apps.ScrapingConfig',
     'contact.apps.ContactConfig',
     'signup.apps.SignupConfig', 
     'getApiProducts.apps.GetapiproductsConfig', 

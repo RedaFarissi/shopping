@@ -95,10 +95,28 @@
                         </div>
                         {% endif %}
 
-                        <div class='d-flex justify-content-around'>
-                            <a href="{{ product.get_absolute_url }}"><b>{{ product.name }}</b></a>
-                            <div> <b>${{ product.price }}</b> </div>
+                        <div class='d-flex justify-content-between'>
+                          <a href="{{ product.get_absolute_url }}"><b>{{ product.name }}</b></a>
+                          <div> <b>${{ product.price }}</b> </div>
                         </div>
+
+                        <!-- Loop through and display sizes -->
+                        <div class='mt-3'>
+                          <p class="card-text">Sizes: &nbsp;
+                            {% for size in product.sizes.all %}
+                              <span class="badge bg-dark">{{ size.name }}</span>
+                            {% endfor %}
+                          </p>
+                          
+                          <p class="card-text d-flex align-items-center ">
+                            <span>Colors : </span> &nbsp;
+                            {% for color in product.colors.all %}
+                            <span class="badge border p-2" style="background-color:{{ color.name }};"> </span>
+                            {% endfor %}
+                          </p>
+                        </div>
+
+                        
                         <br>
                     </div>
                 {% endfor %}

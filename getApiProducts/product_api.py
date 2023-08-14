@@ -1,0 +1,38 @@
+products_api = [
+    {
+        'category':"Bracelets",
+        'name':"Name1",
+        'image':'a1.jpg',
+        'description':"Description",
+        "price":930.00,
+        "colors":["Black", "Red"],
+        "sizes":[ "XL" , 'XXL' , "XXXL"],
+    },
+    {
+        'category':"Watches",  
+        'name':"Name2",
+        'image':'a2.jpg',
+        'description':"Description",
+        "price":980.00,
+        "colors":["Black", "Red"],
+        "sizes":[ "Large" , 'XXL' , "XXXL"],
+    },
+    {
+        'category':"Jwelery", 
+        'name':"Name3",
+        'image':'a3.jpg',
+        'description':"Description",
+        "price": 290.00,
+        "colors":["Black", "Green"],
+        "sizes":['Small', "Medium" ,"Large"],
+    },
+    {
+        'category':"Earrings", 
+        'name':"Name4",
+        'image':'a4.jpg',
+        'description':"Description",
+        "price": 330.00,
+        "colors":["Black", "White"],
+        "sizes":['Small',"Medium","Large"],
+    },  
+]
