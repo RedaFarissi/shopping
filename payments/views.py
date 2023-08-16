@@ -12,8 +12,6 @@ def process_payment(request):
     
     host = request.get_host()
     
-    print(order.items.all())
-
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
         'amount': order.get_total_cost() ,

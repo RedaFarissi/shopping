@@ -15,8 +15,22 @@
 
 {% block content %}
 
-<div id="content" class='row'>
-    <h1 class='col-12 p-4'>Checkout</h1>
+<div id="content" class='container-fluid row pt-5'>    
+    <div class="col-md-6 row justify-content-center">
+        <div class='col-6 p-2 border-bottom border-5 border-primary' style='background-color:#e9e9e9;'>
+            <h3 style='color:#276792'>Your order</h3>
+            <ul class='mb-5'>
+            {% for item in cart %}
+                <li>
+                    {{ item.quantity }}x {{ item.product.name }}
+                    <span>${{ item.total_price }}</span>
+                </li>
+            {% endfor %}
+            </ul>
+            <p style='text-align:right'><b>Total: ${{ cart.get_total_price }}</b></p>
+        </div>
+    </div>
+
     <div class="col-md-6 row justify-content-center">
         <form method="post" class="col-8" >
             {% csrf_token %}
@@ -34,21 +48,6 @@
             <div>{{ form.city }}</div>
             <p class='bg-success mt-2'><input type="submit" class='w-100 bg-primary border-0 text-light fs-5 rounded' value="Place order"></p>
         </form>
-    </div>
-    
-    <div class="col-md-6 row justify-content-center">
-        <div class='col-6 p-2 border-bottom border-5 border-primary' style='background-color:#e9e9e9; height:min-height;'>
-            <h3 style='color:#276792'>Your order</h3>
-            <ul class='mb-5'>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-            </ul>
-            <p style='text-align:right'><b>Total: ${{ cart.get_total_price }}</b></p>
-        </div>
     </div>
 </div>
 {% endblock %}

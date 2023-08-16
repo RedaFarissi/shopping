@@ -14,11 +14,13 @@ def index(request , category_slug=None):
     #this will return all rows with available True and create key total_likes in each product  
     products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
     category = None
+
     #check category_slug if None 
     if category_slug:
         category = get_object_or_404(Category , slug=category_slug)
         query = Q(available=True) & Q(category=category)
         products = Product.objects.filter(query).annotate(total_likes=Count('like'))
+        
     #use paginator 
     paginator = Paginator(products , 12)
     page_number = request.GET.get('page')
@@ -38,7 +40,7 @@ def product_detail(request, id , slug):
 
 def products(request):
     products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
-    paginator = Paginator(products , 100)
+    paginator = Paginator(products , 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, "products.html", {"products": page_obj })

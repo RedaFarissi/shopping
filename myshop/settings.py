@@ -139,13 +139,12 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
-# PAYPAL settings
-PAYPAL_RECEIVER_EMAIL = 'sandbox@mail.com'
-#PAYPAL_RECEIVER_EMAIL = 'redaredaeskouni@mail.com'
+# PAYPAL settings to test
+PAYPAL_RECEIVER_EMAIL = 'sb-myvct26227904@business.example.com'
 PAYPAL_TEST = True
 
 
-## for Facebbok authontication
+## for Facebook authontication
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'index'

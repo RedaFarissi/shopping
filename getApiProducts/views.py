@@ -36,19 +36,10 @@ def add_some_product_from_api_to_database(request):
             with open(image_path, 'rb') as image_file:
                 product.image.save(product_data['image'], ContentFile(image_file.read()), save=True)
 
-        # Retrieve Color instances based on color names
-        color_names = product_data['colors']
-        colors = Color.objects.filter(name__in=color_names)
-        # Assign the retrieved Color instances to the product
-        product.colors.set(colors)
+    
+
         
-
-        # Retrieve Color instances based on color names
-        color_names = product_data['colors']
-        colors = Color.objects.filter(name__in=color_names)
-        # Assign the retrieved Color instances to the product
-        product.colors.set(colors)
-
+        # Retrieve Size instances based on size names
         size_names = product_data['sizes']
         sizes = Size.objects.filter(name__in=size_names)
         product.sizes.set(sizes)

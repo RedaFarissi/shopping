@@ -1,7 +1,12 @@
-.img-detail{ max-height: 80vh; object-fit:contain }
+.img-detail{   object-fit:contain ; width:75%;}
 .slected{ background-color: #ffd3b4}
 .border_dark{ border:0.1px solid rgba(0 0 0/50%); }
 
-@media only screen and (max-width: 999px){ 
+@media only screen and (max-width: 768px){ 
     .detail_page{ padding-bottom: 90px; } 
+    .img-detail{ margin-bottom:3rem; width:95%;}
+}
+
+@media only screen and (max-width: 600px){     
+    .img-detail{ width:99%;}
 }
