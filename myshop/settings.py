@@ -140,7 +140,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 # PAYPAL settings to test
-PAYPAL_RECEIVER_EMAIL = 'sb-myvct26227904@business.example.com'
+PAYPAL_RECEIVER_EMAIL = 'sb-gh7ge26227814@business.example.com'
 PAYPAL_TEST = True
 
 
