@@ -6,8 +6,7 @@ body::-moz-scrollbar-track { background-color: white;border-radius: 2px;box-shad
 body::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
 body::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
 .bg{ background-color: #f5f4ef;}
-
-
+.rose{ background-color: #ffd3b4}
 .logo{ font-size:30px; font-weight:500; margin-left:2rem}
 .usser>a { text-decoration:none; color:black; width:40px; height:40px;  }
 .usser , .cart, .store , .login{ width:47px; height:47px; cursor: pointer; }
@@ -23,6 +22,12 @@ main{ margin:2rem;}
 .hedaer-center-item:hover { font-size:100%; margin-top:-3px;}
 .hedaer-right-btn{ font-weight:500}
 button>a{ color: black}
+.is_superuser{  justify-content:center; bottom:3.3rem; left:2rem; z-index:988; }
+#is_superuser_box{ display:none; margin-bottom:-4px; padding-bottom:4px}
+.btn-fa{ display:block; width:50px; height:50px; margin-top:3px; }
+.add-product-icon{
+  height:90px; width:90px;z-index:999;cursor:pointer; bottom:3.3rem; right:0.9rem;
+}
 
 @media only screen and (max-width:1100px) {
   .header{  margin-bottom:0.5rem}
@@ -34,14 +39,19 @@ button>a{ color: black}
   .header{  margin-bottom:0.3rem}
 
   body{ font-size:95%;}
+  .hedaer-left{ display:none;}
+  .hedaer-center{ width:99%}
   .header-right{  
-    position:fixed; bottom:0rem;  background-color:#f1f1f1;  width:90%; z-index:999; height:65px; 
+    position:fixed; bottom:0rem;  background-color:#f1f1f1;  width:80%; z-index:999; height:65px; 
     display:flex; justify-content:space-around; align-items:center; border:0.9px solid black; 
     border-bottom:none; border-radius: 5px 5px 0px 0px; box-shadow:2px 2px 20px rgba(0 0 0/30%);
   }
   main{ margin:0 }
+  .is_superuser{  bottom:4.2rem; }
+  .add-product-icon{ height:70px; width:70px;bottom:4.2rem; }
 }
-@media only screen and (max-width: 600px){
+@media only screen and (max-width: 768px){
+  .header-right{ width:99%}
   body{ font-size:89%;}
   .hedaer-right-btn{  font-size:90%; }
 }

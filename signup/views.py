@@ -12,7 +12,7 @@ def signup(request):
 
     # add class to html
     for _ , field in form.fields.items():
-        field.widget.attrs['class'] = 'form-control form-control-lg'
+        field.widget.attrs['class'] = 'form-control order-form-input'
 
     # if data is valid 
     if form.is_valid():

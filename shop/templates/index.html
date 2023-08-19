@@ -7,7 +7,56 @@
 
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'index.css' %}">
+  {% comment %} <link rel="stylesheet" href="{% static 'index.css' %}"> {% endcomment %}
+  <style>
+    *{ margin: 0; padding: 0;}
+.cadre-product{ width:95%;float:right; }
+.like:hover{ background-color:black; }
+.like-i:hover{ color:white }
+.aside{ width:220px; float:left }
+.main{ width: calc(100% - 220px); float:right; }
+
+.card-img-top{ height:320px; object-fit:content;}
+.rose{ background-color: #ffd3b4}
+section{ margin:2rem;  }
+#section{ height :400px}
+.carousel-item > img{ object-fit : cover}
+footer{ clear:both }
+
+
+@media only screen and (max-width:1100px) {
+  .aside{  width:100%; }
+  .aside>h5{ display:none; }
+  .main_products{ width:95%; margin:auto; }
+  .list-group {  
+    width:100%; display:flex; flex-direction: row; align-items:center; overflow-x:auto; margin-bottom:20px;
+  }
+  .list-group::-webkit-scrollbar { height: 7px; }
+  .list-group::-webkit-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+  .list-group::-moz-scrollbar-track { background-color: white;border-radius: 5px;box-shadow: white; }
+  .list-group::-webkit-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+  .list-group::-moz-scrollbar-thumb { border-radius: 5px; background-color: gray; }
+  .list-group-item{ width:max-width; }
+  .main_products{ width:96%; margin-left:auto }
+}
+
+@media only screen and (max-width: 992px){
+  section{ margin:0rem; }
+  #section{ display:none}
+  .main_products{ width:95%; margin:auto; }
+  .cadre-product{  float:none; margin:auto; width:95%;clear:both }
+  .card-img-top{ height:360px;} 
+  footer{ margin-bottom:3.8rem;}
+}
+
+
+@media only screen and (max-width: 768px){
+  .main_products{ width:94%; margin:auto; padding:0;margin-bottom:0px; margin-bottom:50px; }
+  .cadre-product{  float:none; margin:auto; width:95%; clear:both; }
+  .img{ height:560px;}
+  heading
+}
+</style>   
 {% endblock head %}
 
 {% block content %}
@@ -56,11 +105,11 @@
         <aside class="aside mt-3" id="aside">
             <h5>Categories</h5>
             <div class="list-group">
-                <div class="list-group-item rounded border-0 {% if not category %}slected{% endif %}">
+                <div class="list-group-item rounded border-0 {% if not category %}rose{% endif %}">
                     <b><a href="{% url "index" %}">All</a></b>
                 </div>
                 {% for c in categories %}
-                    <div class="list-group-item rounded border-0 {% if category.slug == c.slug %}slected{% endif %}">
+                    <div class="list-group-item rounded border-0 {% if category.slug == c.slug %}rose{% endif %}">
                         <b> <a href="{{ c.get_absolute_url }}">{{ c.name }}</a> </b>
                     </div>
                 {% endfor %}
@@ -72,44 +121,50 @@
             
             <div class="row">
              
-              <h1 class='col-md-12 mb-3' style="color:#ffd3b4;font-weight:800;text-shadow:2px 2px 2px black;">{% if category %} {{category.name}} {% endif %}</h1>
+              <h1 class='heading col-md-12 mb-3' style="color:#ffd3b4;font-weight:800;text-shadow:2px 2px 2px black;">{% if category %} {{category.name}} {% endif %}</h1>
                 {% for product in products %}
-                  <div class="col-md-4 p-0 position-relative" >
-                      <div  class='cadre-product mb-3'>
+                  <div class="col-md-4 p-0  position-relative" >
+                      <div  class='cadre-product mb-3' style="width:95%;">
+                        <div class="card w-100">
                           <a href="{{ product.get_absolute_url }}" >
-                              <img class='img w-100' src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                            <img class='card-img-top w-100' src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                           </a>
-                          <div>
-                            <a href="{{ product.get_absolute_url }}">
-                              <b>{{ product.name|slice:"75"}} {% if product.name|length > 75 %} <span class='text-primary'>...</span> {% endif %}  </b>
-                            </a>
-                          </div>
-                          <div class="mt-2 d-flex justify-content-between me-1 align-items-center"> 
-                              <b>${{ product.price }}</b> 
-                              {% if user.is_authenticated %}
-                              <div class='like rounded border'>
-                                  {% if not category %}
-                                      <a onclick='click_like()' href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle Like' >
-                                          <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
-                                          {{ product.total_likes }}
-                                      </a>
-                                  {% else %}
-                                      <a href="{% url 'add_like_product_category' id=product.id slug=product.slug category_slug=category %}" class='btn rounded-circle Like' >
-                                          <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
-                                          {{ product.total_likes }}
-                                      </a>
-                                  {% endif %}
-                              </div>
-                              {% endif %}
+                          <div class="card-body">
+                            <div>
+                              <a href="{{ product.get_absolute_url }}">
+                                <b>{{ product.name|slice:"20"}} {% if product.name|length > 20 %} <span class='text-primary'>...</span> {% endif %}  </b>
+                              </a>
                             </div>
-                          <!-- Loop through and display sizes and colors -->
-                          <div class='mt-3'>
-                            <p class="card-text  d-flex align-items-center "><b>Sizes :</b> &nbsp;
-                              {% for size in product.sizes.all %}
-                                <span class="badge bg-dark me-2">{{ size.name }}</span>
-                              {% endfor %}
-                            </p>
+                            <div class="mt-2 d-flex justify-content-between me-1 align-items-center"> 
+                                <b>${{ product.price }}</b> 
+                                {% if user.is_authenticated %}
+                                <div class='like rounded border'>
+                                    {% if not category %}
+                                        <a onclick='click_like()' href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle Like' >
+                                            <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                            {{ product.total_likes }}
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'add_like_product_category' id=product.id slug=product.slug category_slug=category.slug %}" class='btn rounded-circle Like' >
+                                            <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
+                                            {{ product.total_likes }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                              </div>
+                            <!-- Loop through and display sizes and colors -->
+                            <div class='mt-3 d'>
+                              <p class="card-text d-flex align-items-center flex-wrap"><b>Sizes :</b> &nbsp;                              
+                               {% for size in product.sizes.all %}
+                                  <span class="badge bg-dark me-1">{{ size.name }}</span>
+                                {% endfor %}
+                              </p>
+                            </div>
                           </div>
+                        </div>
+                         
+                          
                       </div>
                   </div>
                 {% endfor %}

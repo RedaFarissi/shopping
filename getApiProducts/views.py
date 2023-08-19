@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from shop.models import Product, Category , Color , Size
+from shop.models import Product, Category , Size
 from .product_api import  products_api 
 from django.utils.text import slugify
 from django.contrib.auth.models import User

@@ -1,3 +1,4 @@
+.section{ margin-bottom:50px }
 table { border-spacing:0; border-collapse: collapse; border:0.9px solid rgba(0 0 0/80%); margin-bottom:40px;}
 tr{ border:0.9px solid rgba(0 0 0/80%); }
 table:hover { background-color: white; }
@@ -6,3 +7,13 @@ thead>tr>th{ padding:9px; }
 .table img { width:180px;  height:180px; object-fit:contain;}
 .text-right { text-align:right;}
 .num{text-align:center;}
+body{ background-color:#f5f4ef;;}
+#Remove{width:0rem; height:0rem;}
+.cursor-pointer{cursor:pointer}
+.btns-pay-or-cont{padding-right:20px;padding-bottom:20px ; width:50%; float:right; }
+
+@media only screen and (max-width: 768px){
+  .price{ margin-top:0.9rem}
+  .btns-pay-or-cont{ width:100%; padding:px ;}
+  .btns-pay-or-cont>a{ float:none; }
+}

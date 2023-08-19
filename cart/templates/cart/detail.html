@@ -5,18 +5,13 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'cart_detail.css'%}" />
-  <style>
-    body{ background-color:#f5f4ef;;}
-    #Remove{width:0rem; height:0rem;}
-    .cursor-pointer{cursor:pointer}
-  </style>
 {% endblock %}
 
 {% block content %}
-<section class="h-100">
-  <div class="container h-100 py-5">
+<section class="h-100 section" >
+  <div class="container-fluid h-100 py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-10">
+      <div class="col-11 box-cart">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
           <div>
@@ -31,7 +26,7 @@
               <div class="col-md-2 col-lg-2 col-xl-2">
                 <a href="{{ product.get_absolute_url }}">
                   <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" 
-                  class='img-fluid rounded-3'>
+                  class='img-fluid w-100 rounded-3'>
                 </a>
           
               </div>
@@ -49,14 +44,13 @@
                 </button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">${{ item.price }}<br>${{ item.total_price }}</h5>
+                <h5 class="mb-0 price">${{ item.price }}<br>${{ item.total_price }}</h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                 <a href="#" class="text-danger"></a>
                 <form action="{% url "cart:cart_remove" product.id %}" method="post">
                   <input type="submit" value="Remove" id='Remove'/> 
                   <i class="fas fa-trash fa-lg text-danger cursor-pointer" onclick="remov_submit()"></i>
-
                   {% csrf_token %}
                 </form>
               </div>
@@ -71,23 +65,26 @@
    
             
         
-        <p class="fw-bold mb-0">Order Details</p> 
-        <div class="card mt-3">
+        <p class="fw-bold  mb-0">Order Details</p> 
+        <div class="card p-3 mt-3">
           <div class="card-head m-3">
             {% for item in cart %}
-                <div class="d-flex justify-content-between mb-1">
+                <div class="d-flex justify-content-between align-items-center mb-1">
                   <p class="text-muted mt-1 mb-0 small ">
                     <b>{{ item.quantity }}x {{ item.product.name }}</b>
                   </p>
-                  <p class="text-muted mb-0 "><span class="fw-bold me-4">Total</span> ${{ item.total_price }}</p>
+                  <p class="text-muted"><span class="fw-bold me-4">Total</span> ${{ item.total_price }}</p>
                 </div>
             {% endfor %}
           </div>
 
-          <div class="card-body">
-            <a href="{% url "orders:order_create" %}" class="btn light btn-lg" style="background-color: #ffd3b4;float:right">Proceed to Pay</button>
-            <a href="{% url "index" %}" class="btn pt-2 pe-4"  style="float:right">Continue shopping</a>
-            <p class='pt-2'><b>Total Price &nbsp; : &nbsp;</b>${{ cart.get_total_price }}</p>
+          <div class="card-body  mt-2">
+            <p class='pt-2 fs-2'><b>Total Price &nbsp; : &nbsp;</b>${{ cart.get_total_price }}</p>
+            <div class='row p-0 btns-pay-or-cont'>
+              <a href="{% url "index" %}" class="col-6 btn btn-lg"  style="float:right">Continue shopping</a>
+              <a href="{% url "orders:order_create" %}" class="col-6 btn rose btn-lg" style="float:right">Proceed to Pay</a>
+            </div>
+           
           </div>
         </div>
 

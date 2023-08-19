@@ -4,12 +4,9 @@ from .models import Product, Category , Like
 from django.db.models import Count
 from django.core.paginator import Paginator
 from django.db.models import Q 
-
-
-
+from django.contrib.auth.decorators import login_required
 
 def index(request , category_slug=None):   
-    print(request.get_host())
     categories =  Category.objects.all()
     #this will return all rows with available True and create key total_likes in each product  
     products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
@@ -39,7 +36,7 @@ def product_detail(request, id , slug):
     return render(request, "detail.html", {"product":product , 'cart_product_form': cart_product_form })
 
 def products(request):
-    products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
+    products =  Product.objects.filter(available=True)
     paginator = Paginator(products , 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -49,20 +46,20 @@ def products(request):
 def about(request):
     return render(request, "about.html")
 
-
+@login_required
 def add_like_product_index(request , id , slug , category_slug=None):
     #get the product 
-    product = get_object_or_404(Product, id=id , slug=slug )
-    #ckeck if user add like or not if yes delete this from Like models
+    product = get_object_or_404( Product, id=id , slug=slug )
+
+    
     if Like.objects.filter(user=request.user, product=product).exists():
         like = Like.objects.filter(user=request.user, product=product).delete()
     else:
         # if not add user and Product to Like models 
         like = Like(user=request.user, product=product)
         like.save()
+    
     if category_slug :
-        category = get_object_or_404(Category , slug=category_slug)
-        print(category)
-        return redirect(category)
-    else:
-        return redirect('index')
+        category = get_object_or_404(Category , slug=category_slug) 
+        return redirect('product_list_by_category', category_slug=category_slug)    
+    return redirect('index')

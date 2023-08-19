@@ -133,7 +133,7 @@ products_api = [
         'image':'a17.jpg',
         'description':"Description",
         "price": 330.00,
-        "sizes":['Small',"Medium","Large"],
+        "sizes":['Small',"Large","3X-Large"],
     },
     {
         'category':"Bracelets", 

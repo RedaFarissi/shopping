@@ -16,37 +16,39 @@
         <link rel="stylesheet" href="{% static 'base.css' %}">
         {% block head %} 
         {% endblock %}
-        <style>
-          .is_superuser{ position:fixed; justify-content:center; bottom:3.3rem; right:0.9rem; z-index:988; }
-          #is_superuser_box{ display:none; margin-bottom:-4px; padding-bottom:4px}
-          .btn-fa{ display:block; background-color:#ffd3b4; width:40px; height:40px; margin-top:3px; }
-        </style>
+        
+        
     </head>
     <body>
       {% if user.is_superuser%}
-      <div class="is_superuser text-light">
+      <div class="is_superuser position-fixed text-light">
         <div id='is_superuser_box' onmouseover="fa_lock_over()" onmouseout="fa_lock_out()">
-          <a href="{% url 'add_some_product_from_api_to_database' %}" class="btn-fa btn rounded-circle" title='Products API'>
-            <i class="fa-regular fa-plus"></i>
+          <a href="{% url 'add_some_product_from_api_to_database' %}" class="rose btn-fa btn rounded-circle d-flex justify-content-center align-items-center" title='Products API'>
+            <i class="fa-regular fa-plus fs-5"></i>
           </a>
-          <a href="{% url 'all_message_from_user' %}" title='All Message From User' class="btn-fa btn rounded-circle">
-            <i class="fa-solid fa-envelope"></i>
+          <a href="{% url 'all_message_from_user' %}" title='All Message From User' class="rose btn-fa btn rounded-circle d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-envelope fs-5"></i>
           </a>
         </div>
        
-        <buuton class="btn-fa btn rounded-circle" title='Just for admin' onmouseover="fa_lock_over()" onmouseout="fa_lock_out()">
-          <i class="fa-solid fa-lock"></i>
+        <buuton class="rose btn-fa btn rounded-circle d-flex justify-content-center align-items-center" title='Just for admin' onmouseover="fa_lock_over()" onmouseout="fa_lock_out()">
+          <i class="fa-solid fa-lock fs-5"></i>
         </buuton>
       </div>
       {% endif %}
     
-
+      {% if user.is_authenticated%}
+      <a href="{% url 'store_list' %}" class="add-product-icon rose rounded-circle position-fixed d-flex justify-content-center align-items-center">
+        <i class="fa-solid fa-plus fs-3"></i>
+      </a>
+      {% endif %}
+      
       <header class='d-flex justify-content-around align-items-center header'>
-        <div class='mt-2'>
+        <div class='mt-2 hedaer-left'>
             <a href="/"><h5 id="collection">MY SHOP</h5></a>
         </div>
     
-        <div class='row'>
+        <div class='row hedaer-center'>
             <a href="{% url 'index'%}" class='col-3 text-center text-dark hedaer-center-item'> Home </a>
             <a href="{% url 'products'%}" class='col-3 text-center text-dark hedaer-center-item'> Products </a>
             <a href="{% url 'about'%}" class='col-3 text-center text-dark hedaer-center-item'> About </a>
@@ -58,9 +60,9 @@
               <a href="{% url 'logout' %}?next={{ request.path }}" class="hedaer-right-btn btn btn-outline-danger" title="Logout"> 
                 <i class="fa-solid fa-right-from-bracket"></i> 
               </a> 
-              <a href="{% url 'create_store' %}" class="hedaer-right-btn btn border border-1 border-dark" title='Store'>
+              {% comment %} <a href="{% url 'create_store' %}" class="hedaer-right-btn btn border border-1 border-dark" title='Store'>
                 <i class="fa-solid fa-store fs-5 w-100 text-center"></i> 
-              </a>
+              </a> {% endcomment %}
             {% else %}
               <a href="{% url 'login' %}?next={{ request.path }}" class="hedaer-right-btn btn btn-outline-success" title='Login'> 
                 <i class="fa-solid fa-right-to-bracket"></i> 
@@ -72,7 +74,7 @@
             {% endif %}
             <a href="{% url "cart:cart_detail" %}" class="hedaer-right-btn btn border border-1 border-dark position-relative" title='cart'> 
                 <i class="fa-solid fa-cart-shopping"></i> 
-                <div class='badge rounded-circle text-dark position-absolute {% if cart|length > 0 %} slected {% else %} bg-warning {% endif %}' style='right:-7px;top:-7px;'> {{ cart|length  }} </div>
+                <div class='badge rounded-circle text-dark position-absolute {% if cart|length > 0 %} rose {% else %} bg-warning {% endif %}' style='right:-7px;top:-7px;'> {{ cart|length  }} </div>
             </a>
         </div>
       </header> 

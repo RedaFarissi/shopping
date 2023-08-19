@@ -9,6 +9,11 @@ def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
+
+         # add class to html
+        for _ , field in form.fields.items():
+            field.widget.attrs['class'] = 'form-control order-form-input'
+
         if form.is_valid():
             order = form.save()
             for item in cart:

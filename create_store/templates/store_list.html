@@ -9,62 +9,78 @@
 
 {% block head %}
     <style>
-        .form-group{ margin-top:0.9rem }
-        .img{ height:240px; object-fit:cover;}
+        .container{ margin-bottom:99px}
+        .card{width:95%;}
+        .card-img-top{ height:360px; object-fit:cover }
+        .float-right{ float:right }
+        .fa-image{ font-size:120px}
+        .cursor-pointer{ cursor:pointer}
+        .galery-icon{ width:95%; background-color:#f5f4ef; }
+        @media only screen and (max-width: 992px){
+            .galery-icon{ width:100%;  background-color:#f5f4ef; }
+            .row>div:first-child { height:200px; }
+            .card{width:100%;}
+        }
+        @media only screen and (max-width: 768px){
+            .card-img-top{ height:480px;  }
+        }
     </style>
 {% endblock %}
 
 {% block content %}
-<div id="content">
-    <div id="main" class="product-list w-100">
-        <div class='d-flex justify-content-between align-items-center'>
-            <h1 class='mt-5 mb-4'> {{ store_name }} Store</h1>
-            <div class="mt-5 me-5 pt-5 pe-5">
-                <button type="button" class="btn btn-outline-success fs-5" data-bs-toggle="modal" data-bs-target="#id_modal"> 
-                    Add Product  
-                </button>
+    <!-- add product box -->
+    <div class="modal" id="add-product"> 
+        <div class="modal-dialog"> 
+          <div class="modal-content"> 
+
+            <div class="modal-header"> 
+              <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body"> 
+              <div class='container'>
+                  <form action="{% url 'store_list' %}" method='POST' enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {% bootstrap_form form %}
+                      <button type="submit" class='btn btn-primary w-100' style='margin:auto'> Submit </button>
+                  </form>
+              </div>        
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         
-        </div>
-        
-        <div class="modal" id="id_modal"> 
-          <div class="modal-dialog"> 
-            <div class="modal-content"> 
-              
-              <div class="modal-header"> 
-                <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body"> 
-                <div class='container'>
-                    <form action="{% url 'store_list' %}" method='POST' enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% bootstrap_form form %}
-                        <button type="submit" class='btn btn-primary w-100' style='margin:auto'> Submit </button>
-                    </form>
-                </div>        
-              </div>
-              <div class="modal-footer"> 
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-              </div>
-        
-            </div>
           </div>
         </div>
+    </div>
+    <div class="container">
+        <div class='row'>
+            <div class="col-lg-4 mb-3" title="Create Product">
+                <div class="galery-icon float-right border h-100 d-flex justify-content-center align-items-center cursor-pointer" data-bs-toggle="modal" data-bs-target="#add-product">
+                    <i class="fa-solid fa-image text-success"></i>
+                </div>
+            </div>
 
        
-        <div class='mt-5 pt-5 row'>
-            {% for product in store_products %}
-                <div class="col-md-4">
-                    <a href="{{ product.get_absolute_url }}">
-                        <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class='w-100 img'>
-                    </a>
-                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-                    <br>
-                    ${{ product.price }}
+            {% for product in products_created_by_user %}
+                <div class="col-lg-4 mb-3">
+                    <div class="card float-right">
+                        <a href="{{ product.get_absolute_url }}">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}" class='w-100 card-img-top'>
+                        </a>
+                        <div class="card-body">
+                          <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name|slice:"33" }}</a></h5>
+                          <h5 class="card-tile mt-3 d-flex justify-content-between">  
+                            <span>${{ product.price }} </span>
+                            <span>{{ product.total_likes }} <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i></span>
+                          </h5>
+                          
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
+            
         </div>
     </div>
-</div>
+
 {% endblock %}

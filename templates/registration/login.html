@@ -2,7 +2,7 @@
 
 {% block head %}
   <style>
-    .section-login{ margin-top:6rem;margin-bottom:6rem;}
+    .section-login{ height:80vh;}
   </style>
 {% endblock head %}
 
@@ -12,7 +12,7 @@
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
  
-<section class="section-login">
+<section class="section-login d-flex align-items-center">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
@@ -42,21 +42,11 @@
             <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
           </div>
 
-          <!-- Checkbox -->
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="form-check mb-0">
-              <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-              <label class="form-check-label" for="form2Example3">
-                Remember me
-              </label>
-            </div>
-            <a href="#!" class="text-body">Forgot password?</a>
-          </div>
-          
+      
           <div class="text-center text-lg-start mt-4 pt-2">
-            <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Login"/>
+            <input type="submit" class="btn btn-lg rose" style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Login"/>
             <input type="hidden" name="next" value="{{ next }}">
-            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}" class="link-danger">Register</a></p>
+            <p class="fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup' %}" class="text-primary">Register</a></p>
           </div>
         </form>
       </div>
