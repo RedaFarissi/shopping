@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="{% static 'base.css' %}">
         {% block head %} 
         {% endblock %}
-        
+    
         
     </head>
     <body>
@@ -28,6 +28,9 @@
           </a>
           <a href="{% url 'all_message_from_user' %}" title='All Message From User' class="rose btn-fa btn rounded-circle d-flex justify-content-center align-items-center">
             <i class="fa-solid fa-envelope fs-5"></i>
+          </a>
+          <a href="{% url 'admin:index' %}" title='Admin' class="rose btn-fa btn rounded-circle d-flex justify-content-center align-items-center">
+            <i class="fa-solid fa-unlock"></i>
           </a>
         </div>
        

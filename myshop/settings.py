@@ -8,7 +8,19 @@ SECRET_KEY = 'django-insecure-2wf!^9tjx04nwo#2(5hb3sj$l2x^w(km*r44rqaxo)-%fh7(o=
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "bdda-160-179-202-138.ngrok-free.app",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://bdda-160-179-202-138.ngrok-free.app",
+]
+#telling Django to consider requests from this domain as trusted for CSRF verification.
+CSRF_TRUSTED_ORIGINS = [
+    "https://bdda-160-179-202-138.ngrok-free.app",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',

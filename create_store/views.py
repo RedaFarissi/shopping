@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def store_list(request):
-    products = Product.objects.filter(user=request.user).annotate(total_likes=Count('like')) 
+    products = Product.objects.filter(user=request.user).annotate(total_likes=Count('like')).order_by('-id') 
     form = ProductForm(request.POST or None, request.FILES or None)
     if form.is_valid():
         product = form.save(commit=False)

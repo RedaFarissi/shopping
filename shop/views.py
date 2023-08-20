@@ -9,14 +9,14 @@ from django.contrib.auth.decorators import login_required
 def index(request , category_slug=None):   
     categories =  Category.objects.all()
     #this will return all rows with available True and create key total_likes in each product  
-    products =  Product.objects.filter(available=True).annotate(total_likes=Count('like'))
+    products =  Product.objects.filter(available=True).annotate(total_likes=Count('like')).order_by('-id')
     category = None
 
     #check category_slug if None 
     if category_slug:
         category = get_object_or_404(Category , slug=category_slug)
         query = Q(available=True) & Q(category=category)
-        products = Product.objects.filter(query).annotate(total_likes=Count('like'))
+        products = Product.objects.filter(query).annotate(total_likes=Count('like')).order_by('-id')
         
     #use paginator 
     paginator = Paginator(products , 12)
@@ -36,7 +36,7 @@ def product_detail(request, id , slug):
     return render(request, "detail.html", {"product":product , 'cart_product_form': cart_product_form })
 
 def products(request):
-    products =  Product.objects.filter(available=True)
+    products =  Product.objects.filter(available=True).order_by('-id')
     paginator = Paginator(products , 50)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

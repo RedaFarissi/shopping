@@ -7,13 +7,15 @@ from .forms import SignUpForm
 
 # we use this function to create Sign Up  
 def signup(request):
+    host = request.get_host()
+    protocol = 'https' if request.is_secure() else 'http'
+    
     # get data from browser if data send by user  if not create fields
     form = SignUpForm(request.POST or None) 
 
     # add class to html
     for _ , field in form.fields.items():
         field.widget.attrs['class'] = 'form-control order-form-input'
-
     # if data is valid 
     if form.is_valid():
         # get data valid and save it in variable user  
@@ -21,7 +23,7 @@ def signup(request):
         pas = form.cleaned_data.get('password1')
         title = 'Activate your account' #title Email
         message = 'Please click the link below to activate your account:\n\n ' \
-                  f'http://localhost:8000/signup/activate/{user.username}/{pas}/{user.email}/' 
+                  f'{protocol}://{host}/signup/activate/{user.username}/{pas}/{user.email}/' 
         send_mail(title, message, settings.EMAIL_HOST_USER, [user.email])
         return render(request , 'registration_complete.html')  
     return render(request, 'signup.html', {'form': form})
