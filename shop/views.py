@@ -9,9 +9,10 @@ from django.contrib.auth.decorators import login_required
 def index(request , category_slug=None):   
     categories =  Category.objects.all()
     #this will return all rows with available True and create key total_likes in each product  
-    products =  Product.objects.filter(available=True).annotate(total_likes=Count('like')).order_by('-id')
+    products =  Product.objects.filter(available=True).order_by('-id')
     category = None
 
+        
     #check category_slug if None 
     if category_slug:
         category = get_object_or_404(Category , slug=category_slug)
@@ -46,11 +47,12 @@ def products(request):
 def about(request):
     return render(request, "about.html")
 
+from django.http import JsonResponse
+
 @login_required
 def add_like_product_index(request , id , slug , category_slug=None):
     #get the product 
     product = get_object_or_404( Product, id=id , slug=slug )
-
     
     if Like.objects.filter(user=request.user, product=product).exists():
         like = Like.objects.filter(user=request.user, product=product).delete()
@@ -59,7 +61,10 @@ def add_like_product_index(request , id , slug , category_slug=None):
         like = Like(user=request.user, product=product)
         like.save()
     
-    if category_slug :
-        category = get_object_or_404(Category , slug=category_slug) 
-        return redirect('product_list_by_category', category_slug=category_slug)    
-    return redirect('index')
+    # if category_slug :
+    #     category = get_object_or_404(Category , slug=category_slug) 
+    #     return redirect('product_list_by_category', category_slug=category_slug)    
+    # return redirect('index')
+
+    total_likes = product.total_likes()
+    return JsonResponse({"total_likes": total_likes })

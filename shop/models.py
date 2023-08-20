@@ -54,7 +54,10 @@ class Product(models.Model):
     #name return in admin page
     def __str__(self):
         return self.name
-    
+   
+    def total_likes(self):
+        return self.like_set.count()
+
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

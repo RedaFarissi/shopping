@@ -90,17 +90,11 @@
                                 <b>${{ product.price }}</b> 
                                 {% if user.is_authenticated %}
                                 <div class='like rounded border'>
-                                    {% if not category %}
-                                        <a onclick='click_like()' href="{% url 'add_like_product' id=product.id slug=product.slug %}" class='btn rounded-circle Like' >
-                                            <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
-                                            {{ product.total_likes }}
-                                        </a>
-                                    {% else %}
-                                        <a href="{% url 'add_like_product_category' id=product.id slug=product.slug category_slug=category.slug %}" class='btn rounded-circle Like' >
-                                            <i class="fa-sharp fa-solid fa-thumbs-up like-i"></i>
-                                            {{ product.total_likes }}
-                                        </a>
-                                    {% endif %}
+                                  <a data-url="{% url 'add_like_product' id=product.id slug=product.slug %}" {% comment %} href="{% url 'add_like_product' id=product.id slug=product.slug %}"  {% endcomment %}
+                                   class='add-like-product Like btn'>
+                                      <i class="fa-sharp fa-solid fa-thumbs-up like-i {% if product_is_liked_by_user %}text-primary{% endif %}"></i>
+                                      <b class='total-like'>{{ product.total_likes }}</b>
+                                  </a>
                                 </div>
                                 {% endif %}
                               </div>
@@ -121,11 +115,6 @@
                 {% endfor %}
             </div>
         </div>
-
-
-
-
-
 
 
     {% if products.has_other_pages %}
@@ -159,7 +148,34 @@
     {% endif%}
     </section>
 
+    <script>
+      $(document).ready(function() {
+          $(".add-like-product").click(function() {
+            var button = $(this);
+            var likeIcon = button.find(".like-i");
+            var totalLikeRsult = button.find(".total-like")
+            var url = button.data("url")
+            $.ajax({
+                  url:  url,
+                  type: "POST", 
+                  dataType: "json",
+                  headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                  },
+                  success: function(response) {
+                    console.log(response)
+                    likeIcon.toggleClass("liked", response.liked);
+                    totalLikeRsult.text(response.total_likes);
+                  },
+                  error: function(xhr, errmsg, err) {
+                      console.log(err);
+                  }
+              });
+          });
+      });
+    </script>
 
+     
     
    
 {% endblock %}
