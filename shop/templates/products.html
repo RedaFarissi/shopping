@@ -20,18 +20,18 @@
                         </a>
 
                         <a href="{{ product.get_absolute_url }}">
-                            <h5>
+                            <h6>
                                 <b>{{ product.name|slice:"44" }}{% if product.name|length > 44 %}...{% endif %}</b>
-                            </h5>
-                            <h5 class='d-flex justify-content-between align-items-center mt-2'> 
+                            </h6>
+                            <h6 class='d-flex justify-content-between align-items-center mt-2'> 
                                 ${{ product.price }}
-                            </h5>
-                            <h5 class='d-flex flex-wrap'> 
+                            </h6>
+                            <h6 class='d-flex flex-wrap'> 
                                 <b>Sizes : &nbsp;</b> 
                             {% for size in product.sizes.all %}
                                 <span class="badge bg-dark me-1">{{ size.name }}</span>
                             {% endfor %}
-                            </h5>
+                            </h6>
                         </a>
                     </div>
                 </div>

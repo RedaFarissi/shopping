@@ -12,14 +12,15 @@
 
 
 {% block content %}
-<div class='row m-2 mt-5 detail_page' > 
-    <div class='col-md-6 d-flex justify-content-center'>
-        <img class='img-detail ' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">
+<div style='height:80vh' class='container d-flex justify-content-center align-items-center'>
+<div class='row detail_page' > 
+    <div class='col-md-6 d-flex justify-content-center' style="height:500px;">
+        <img class='img-detail w-100 h-100' style='object-fit:cover' src="{% if product.image %}{{ product.image.url }}{% else %} {% static "img/no_image.png" %}{% endif %}">
     </div>
     <div class='col-md-6 d-flex align-items-center'>
-        <div>
-            <h1>{{ product.name }}</h1>
-            <h2> <a href="{{ product.category.get_absolute_url }}"> {{ product.category }} </a> </h2>
+        <div class='mt-2'>
+            <h2>{{ product.name }}</h2>
+            <h3> <a href="{{ product.category.get_absolute_url }}"> {{ product.category }} </a> </h3>
             <p class="price"> ${{ product.price }} </p>
             
             {{ product.description|linebreaks }}
@@ -41,5 +42,7 @@
         </div>
     </div>
 </div>
+</div>
+
 
 {% endblock %}

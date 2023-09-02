@@ -80,9 +80,9 @@
                           <a href="{{ product.get_absolute_url }}" >
                             <img class='card-img-top w-100' src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
                           </a>
-                          <div class="card-body">
+                          <div class="card-body" style>
                             <div>
-                              <a href="{{ product.get_absolute_url }}">
+                              <a href="{{ product.get_absolute_url }}" >
                                 <b>{{ product.name|slice:"20"}} {% if product.name|length > 20 %} <span class='text-primary'>...</span> {% endif %}  </b>
                               </a>
                             </div>
@@ -173,9 +173,5 @@
               });
           });
       });
-    </script>
-
-     
-    
-   
+    </script>   
 {% endblock %}
