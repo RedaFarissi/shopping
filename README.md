@@ -27,14 +27,7 @@ pip install -r requirements.txt
 ### to run project , use :
 python manage.py runserver
 
-
  
 # LINK 
 ### Home page :
 http://127.0.0.1:8000/
-
-### When you want to see admin page go to :
-http://127.0.0.1:8000/admin/
-
-
-
